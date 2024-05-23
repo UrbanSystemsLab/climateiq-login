@@ -1,4 +1,5 @@
-// Download the Firebase config to a local, untracked file.
+// Download the Firebase config to a local, untracked file. The apiKey in the config
+// is intended to be public, so it's fine to include in the frontend.
 var fs = require("fs");
 var https = require("https");
 var FIREBASE_CONFIG_URL = 'https://climateiq.web.app/__/firebase/init.json';
