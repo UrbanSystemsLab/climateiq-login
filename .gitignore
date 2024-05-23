@@ -1,0 +1,6 @@
+dist
+dist-ssr
+.firebase
+firebase-config.json
+logs
+node_modules
