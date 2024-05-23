@@ -14,7 +14,7 @@ Install [firebase-cli](https://firebaseopensource.com/projects/firebase/firebase
 
 ```bash
 npm run build
-firebase deploy
+firebase deploy --project climateiq
 ```
 
 If you run into any errors, try logging into Firebase again:

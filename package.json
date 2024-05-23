@@ -4,11 +4,12 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vue-tsc && vite build",
-        "preview": "vite preview",
+        "dev": "npm run downloadConfig && vite",
+        "build": "vue-tsc && npm run downloadConfig && vite build",
+        "preview": "npm run downloadConfig && vite preview",
         "lint": "eslint \"{src,test}/**/*.{js,ts,vue}\"",
-        "format": "prettier --write \"{src,test}/**/*.{js,ts}\""
+        "format": "prettier --write \"{src,test}/**/*.{js,ts}\"",
+        "downloadConfig": "node download-config.cjs"
     },
     "dependencies": {
         "firebase": "^10.11.1",

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import firebaseConfigStr from '../firebase-config.json?raw';
 import { initializeApp } from 'firebase/app';
-import { FIREBASE_CONFIG } from './config';
 
-initializeApp(FIREBASE_CONFIG);
+const firebaseConfig = JSON.parse(firebaseConfigStr);
+initializeApp(firebaseConfig);
 </script>
 
 <template>
