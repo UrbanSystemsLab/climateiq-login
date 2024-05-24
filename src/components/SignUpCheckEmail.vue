@@ -35,17 +35,12 @@ onBeforeUnmount(unsubscribeAuthListener);
     to verify.
   </p>
   <p>
-    Didn't receive the mail? Check your spam filter for an email from
+    Didn't receive the email? Check your spam filter for an email from
     account@climateiq.com.
   </p>
   <button @click="resendEmail">Resend email</button>
   <div class="account-actions">
     <p><RouterLink to="/sign-up">Use another email</RouterLink></p>
     <p><RouterLink to="/login">Log in</RouterLink></p>
-  </div>
-
-  <div class="need-help">
-    Need help? Contact at
-    <a href="mailto:support@climateiq.com">support@climateiq.com</a>.
   </div>
 </template>
