@@ -12,7 +12,7 @@ const props = defineProps(REDIRECT_URI_PROP);
 function logOut() {
   signOut(auth).then(() => {
     if (props.redirectUri) {
-      window.location.href = 'http://' + props.redirectUri;
+      window.location.href = props.redirectUri;
     } else {
       router.push({ path: '/' });
     }

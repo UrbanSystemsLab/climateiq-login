@@ -26,7 +26,7 @@ async function signIn() {
     errorMessage.value = (error as Error).message;
     return;
   }
-  // Clear the error if this sign in attempt does not throw.
+  // Clear the error if this sign in attempt does not throw an error.
   errorMessage.value = null;
 }
 
@@ -34,7 +34,7 @@ async function signIn() {
 const unsubscribeAuthListener = onAuthStateChanged(auth, (user) => {
   if (user) {
     if (props.redirectUri) {
-      window.location.href = 'http://' + props.redirectUri;
+      window.location.href = props.redirectUri;
     } else {
       router.push({ path: '/account-management' });
     }
@@ -56,6 +56,10 @@ onBeforeUnmount(unsubscribeAuthListener);
     <div class="password">
       <label for="password">Password</label>
       <input type="password" v-model="password" />
+    </div>
+
+    <div class="reset-password">
+      <RouterLink to="reset-password">Reset Password</RouterLink>
     </div>
 
     <button @click="signIn" type="submit">Continue</button>
