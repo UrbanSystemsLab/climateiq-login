@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteLocation } from 'vue-router';
 
+import AccountManagement from './components/AccountManagement.vue';
 import LogIn from './components/LogIn.vue';
 import LogOut from './components/LogOut.vue';
 import SignUp from './components/SignUp.vue';
@@ -15,9 +16,8 @@ export const router = createRouter({
         redirectUri: route.query.redirect_uri,
       }),
     },
-    // Sign Up
-    { path: '/sign-up', component: SignUp },
-    { path: '/sign-up-check-email', component: SignUpCheckEmail },
+    // Account Management
+    { path: '/account-management', component: AccountManagement },
     // Login
     {
       path: '/login',
@@ -34,5 +34,8 @@ export const router = createRouter({
         redirectUri: route.query.redirect_uri,
       }),
     },
+    // Sign Up
+    { path: '/sign-up', component: SignUp },
+    { path: '/sign-up-check-email', component: SignUpCheckEmail },
   ],
 });
