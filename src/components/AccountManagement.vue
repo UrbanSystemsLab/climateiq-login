@@ -71,7 +71,9 @@ async function updateName() {
     return;
   }
   // TODO: Allow users to save if undefined e.g., no name defined initially.
-  // First, update the user profile in Firebase Auth.
+  // First, update the user profile in Firebase Auth. This field is used for the email
+  // templates.
+  // TODO: Confirm if emails should show full name or first name only.
   try {
     await updateProfile(auth.currentUser!, {
       displayName: `${firstName.value} ${lastName.value}`,
@@ -81,7 +83,9 @@ async function updateName() {
     console.log(error);
     return;
   }
-  // Then, also update the Firestore entry for the user.
+  // Then, also update the Firestore entry for the user. This allows us to store the
+  // first and last names separately.
+  // TODO: Also store organization and location.
   try {
     await setDoc(doc(db, 'users', auth.currentUser!.uid), {
       first_name: firstName.value,
