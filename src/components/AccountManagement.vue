@@ -33,10 +33,6 @@ const editingName = ref(false);
 const showRelogin = ref(false);
 
 async function getUserInfo(user: User) {
-  if (email.value) {
-    // Already loaded user info.
-    return;
-  }
   email.value = user.email;
   const docSnap = await getDoc(doc(db, 'users', user.uid));
   if (docSnap.exists()) {
@@ -116,7 +112,7 @@ onBeforeUnmount(() => {
 
 <template>
   <h2>Account Management</h2>
-  <h3>ID and Password</h3>
+  <h3>Email and Password</h3>
   <div class="email">
     <label for="email">Email</label>
     <input name="email" type="text" v-model="email" readonly />
