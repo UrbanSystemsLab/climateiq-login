@@ -5,6 +5,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
   User,
 } from 'firebase/auth';
@@ -94,6 +95,10 @@ async function updateName() {
   editingName.value = false;
 }
 
+function logout() {
+  signOut(auth);
+}
+
 // This listener is triggered in two cases:
 // * When the user lands on this page.
 // * When the user deletes their account.
@@ -142,6 +147,9 @@ onBeforeUnmount(() => {
       {{ editingName ? 'Save' : 'Edit' }}
     </button>
   </form>
+  <div class="logout">
+    <button @click="logout">Logout</button>
+  </div>
   <form class="delete-account" @submit.prevent>
     <div class="relogin-password" v-if="showRelogin">
       <label for="password">Password</label>
