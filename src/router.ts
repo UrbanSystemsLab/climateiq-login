@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory, RouteLocation } from 'vue-router';
 
 import AccountManagement from './components/AccountManagement.vue';
+import HandleAction from './components/HandleAction.vue';
 import LogIn from './components/LogIn.vue';
 import LogOut from './components/LogOut.vue';
 import SignUp from './components/SignUp.vue';
 import SignUpCheckEmail from './components/SignUpCheckEmail.vue';
+import UpdateEmail from './components/UpdateEmail.vue';
+import UpdateEmailCheckEmail from './components/UpdateEmailCheckEmail.vue';
 
 export const router = createRouter({
   history: createWebHistory('/auth/'),
@@ -18,6 +21,15 @@ export const router = createRouter({
     },
     // Account Management
     { path: '/account-management', component: AccountManagement },
+    // Handle Action
+    {
+      path: '/action',
+      component: HandleAction,
+      props: (route: RouteLocation) => ({
+        mode: route.query.mode,
+        oobCode: route.query.oobCode,
+      }),
+    },
     // Login
     {
       path: '/login',
@@ -37,5 +49,12 @@ export const router = createRouter({
     // Sign Up
     { path: '/sign-up', component: SignUp },
     { path: '/sign-up-check-email', component: SignUpCheckEmail },
+    // Update Email
+    { path: '/update-email', component: UpdateEmail },
+    {
+      path: '/update-email-check-email',
+      component: UpdateEmailCheckEmail,
+      props: (route: RouteLocation) => ({ newEmail: route.query.newEmail }),
+    },
   ],
 });
