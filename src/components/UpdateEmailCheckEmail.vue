@@ -8,7 +8,6 @@ const auth = getAuth();
 
 const props = defineProps(['newEmail']);
 
-const currentEmail = ref();
 const emailResent= ref(false);
 
 async function resendEmail() {
@@ -25,9 +24,7 @@ async function resendEmail() {
 
 onBeforeMount(async () => {
   await auth.authStateReady();
-  if (auth.currentUser) {
-    currentEmail.value = auth.currentUser.email;
-  } else {
+  if (!auth.currentUser) {
     router.push('/');
   }
 });
