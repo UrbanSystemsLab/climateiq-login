@@ -18,6 +18,7 @@ async function resendEmail() {
     console.log(error);
     return;
   }
+  // TODO: Show UI message indicating the email has been sent.
   alert('Update Email Sent!');
 }
 

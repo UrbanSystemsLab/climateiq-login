@@ -1,3 +1,5 @@
+<!--Handles all actions with oobCodes, like
+  https://firebase.google.com/docs/auth/custom-email-handler-->
 <script setup lang="ts">
 import { applyActionCode, checkActionCode, getAuth } from 'firebase/auth';
 import { onBeforeMount, ref } from 'vue';
@@ -16,7 +18,7 @@ function showError(error: Error) {
 }
 
 async function handleUpdateEmail() {
-try {
+  try {
     await checkActionCode(auth, props.oobCode);
     await applyActionCode(auth, props.oobCode);
   } catch (error) {

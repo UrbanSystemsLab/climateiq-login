@@ -56,7 +56,7 @@ onBeforeMount(async () => {
       <label for="password">Password</label>
       <input type="password" name="password" v-model="password" required />
     </div>
-
+    <p>We'll send you an email verification link.</p>
     <button @click="updateEmail" type="submit">Continue</button>
   </form>
 </template>
