@@ -8,7 +8,7 @@ const auth = getAuth();
 
 const props = defineProps(['newEmail']);
 
-const emailResent= ref(false);
+const emailResent = ref(false);
 
 async function resendEmail() {
   emailResent.value = false;

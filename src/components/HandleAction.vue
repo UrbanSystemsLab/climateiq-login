@@ -1,7 +1,12 @@
 <!--Handles all actions with oobCodes, like
   https://firebase.google.com/docs/auth/custom-email-handler-->
 <script setup lang="ts">
-import { applyActionCode, checkActionCode, getAuth, signOut } from 'firebase/auth';
+import {
+  applyActionCode,
+  checkActionCode,
+  getAuth,
+  signOut,
+} from 'firebase/auth';
 import { onBeforeMount, ref } from 'vue';
 
 import { router } from '../router';
