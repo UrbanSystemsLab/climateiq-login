@@ -1,18 +1,20 @@
 <!--Handles all actions with oobCodes, like
   https://firebase.google.com/docs/auth/custom-email-handler-->
 <script setup lang="ts">
-import { applyActionCode, checkActionCode, getAuth } from 'firebase/auth';
+import { applyActionCode, checkActionCode, getAuth, signOut } from 'firebase/auth';
 import { onBeforeMount, ref } from 'vue';
+
+import { router } from '../router';
 
 const auth = getAuth();
 
 const props = defineProps(['mode', 'oobCode']);
 
 const errorMessage = ref();
-const header = ref('Loading...');
+const showState = ref('loading');
 
 function showError(error: Error) {
-  header.value = 'Error';
+  showState.value = 'error';
   // TODO: Clean up error message.
   errorMessage.value = error.message;
 }
@@ -25,7 +27,10 @@ async function handleUpdateEmail() {
     showError(error as Error);
     return;
   }
-  header.value = 'Update email completed!';
+  // Need to sign out explicitly to prevent bug where the user still appears
+  // to be signed in on the next view.
+  signOut(auth);
+  router.push({ path: 'update-email-completed' });
 }
 
 onBeforeMount(async () => {
@@ -40,7 +45,12 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <h2>{{ header }}</h2>
-  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-  <div><RouterLink to="/login">Log in</RouterLink></div>
+  <div class="loading" v-if="showState == 'loading'">
+    <h2>Loading...</h2>
+  </div>
+
+  <div class="error-message" v-if="showState == 'error'">
+    <h2>Error</h2>
+    <p>{{ errorMessage }}</p>
+  </div>
 </template>

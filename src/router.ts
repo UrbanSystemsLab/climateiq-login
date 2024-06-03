@@ -8,6 +8,7 @@ import SignUp from './components/SignUp.vue';
 import SignUpCheckEmail from './components/SignUpCheckEmail.vue';
 import UpdateEmail from './components/UpdateEmail.vue';
 import UpdateEmailCheckEmail from './components/UpdateEmailCheckEmail.vue';
+import UpdateEmailCompleted from './components/UpdateEmailCompleted.vue';
 
 export const router = createRouter({
   history: createWebHistory('/auth/'),
@@ -56,5 +57,6 @@ export const router = createRouter({
       component: UpdateEmailCheckEmail,
       props: (route: RouteLocation) => ({ newEmail: route.query.newEmail }),
     },
+    { path: '/update-email-completed', component: UpdateEmailCompleted },
   ],
 });
