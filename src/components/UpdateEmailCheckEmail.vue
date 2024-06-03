@@ -9,8 +9,10 @@ const auth = getAuth();
 const props = defineProps(['newEmail']);
 
 const currentEmail = ref();
+const emailResent= ref(false);
 
 async function resendEmail() {
+  emailResent.value = false;
   try {
     await verifyBeforeUpdateEmail(auth.currentUser!, props.newEmail);
   } catch (error) {
@@ -18,8 +20,7 @@ async function resendEmail() {
     console.log(error);
     return;
   }
-  // TODO: Show UI message indicating the email has been sent.
-  alert('Update Email Sent!');
+  emailResent.value = true;
 }
 
 onBeforeMount(async () => {
@@ -43,6 +44,7 @@ onBeforeMount(async () => {
     account@climateiq.org.
   </p>
   <button @click="resendEmail">Resend email</button>
+  <div class="email-resent" v-if="emailResent">Email resent!</div>
   <div class="account-actions">
     <p><RouterLink to="/update-email">Use another email</RouterLink></p>
     <p><RouterLink to="/login">Log in</RouterLink></p>
