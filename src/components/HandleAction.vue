@@ -2,6 +2,7 @@
   https://firebase.google.com/docs/auth/custom-email-handler-->
 <script setup lang="ts">
 import {
+  ActionCodeInfo,
   applyActionCode,
   checkActionCode,
   getAuth,
@@ -23,6 +24,21 @@ function showError(error: Error) {
   showState.value = 'error';
   // TODO: Clean up error message.
   errorMessage.value = error.message;
+}
+
+async function handleRecoverEmail() {
+  let info: ActionCodeInfo;
+  try {
+    info = await checkActionCode(auth, props.oobCode);
+    await applyActionCode(auth, props.oobCode);
+  } catch (error) {
+    showError(error as Error);
+    return;
+  }
+  router.push({
+    path: 'recover-email-completed',
+    query: { email: info['data']['email'] },
+  });
 }
 
 async function handleResetPassword() {
@@ -52,13 +68,33 @@ async function handleUpdateEmail() {
   router.push({ path: 'update-email-completed' });
 }
 
+async function handleVerifyEmail() {
+  try {
+    await checkActionCode(auth, props.oobCode);
+    await applyActionCode(auth, props.oobCode);
+  } catch (error) {
+    showError(error as Error);
+    return;
+  }
+  router.push({ path: 'verify-email-completed' });
+}
+
 onBeforeMount(async () => {
   switch (props.mode) {
+    case 'recoverEmail':
+      // i.e., undo email change.
+      handleRecoverEmail();
+      break;
     case 'resetPassword':
       handleResetPassword();
       break;
     case 'verifyAndChangeEmail':
+      // i.e., verify email change on existing account.
       handleUpdateEmail();
+      break;
+    case 'verifyEmail':
+      // i.e., verify email after sign up.
+      handleVerifyEmail();
       break;
     default:
     // Invalid mode
