@@ -4,9 +4,14 @@ import { User, updateProfile } from 'firebase/auth';
 import { doc, Firestore, setDoc } from 'firebase/firestore';
 import moment from 'moment';
 
-const TOKEN_COOKIE_ID = 'climate_iq_access_token';
-const EXPIRY_COOKIE_ID = 'climate_iq_access_token_expiry';
+const TOKEN_COOKIE_ID = 'climateiq_access_token';
+const EXPIRY_COOKIE_ID = 'climateiq_access_token_expiry';
 const TOKEN_API_ENDPOINT_URI = 'https://34.49.55.140.nip.io/oauth/token';
+// This authorization code is used for identifying this user authentication app. The
+// Apigee /oauth/token endpoint will only return an API access token if a valid JWT
+// issued by the authentication app is also present in the request.
+const AUTH_CODE =
+  'cDF1QXM4T3NGdDI2emlUYWIzQmt2cFdNOUJIbDVyUmNjT25CZHhzVFIya3MwVEZ0OmNTNU1WSFFjTkI4VHJ0UXJLOVZpc09BNDFNUGVRQUtjWHc5ZmRPcTZIWFN4aDBUdU1Va0h5Tk9wZ0ZsYTBpYnI=';
 
 export const REDIRECT_URI_PROP = {
   redirectUri: {
@@ -35,6 +40,7 @@ export async function getApigeeTokenAndSetCookies(
       return;
     }
   }
+
   const response = await axios.post(
     TOKEN_API_ENDPOINT_URI,
     {
@@ -43,8 +49,7 @@ export async function getApigeeTokenAndSetCookies(
     },
     {
       headers: {
-        Authorization:
-          'Basic cWNRZXNsbnY5eVFTS09kbkVEWDBCTkRVM2xjTzIwOWU6ZmFkVWZ5Q21OMDg0emJJcQ==',
+        Authorization: `Basic ${AUTH_CODE}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     },
