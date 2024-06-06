@@ -12,7 +12,7 @@ function goToResetPassword() {
 </script>
 
 <template>
-  <h2>Email recovered</h2>
+  <h2>Email restored</h2>
   <p>Your account's email has been reset to {{ props.email }}.</p>
   <p>
     If you didn't initiate this email change, your account may be compromised

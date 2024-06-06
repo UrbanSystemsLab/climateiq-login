@@ -74,6 +74,7 @@ async function updateName() {
   } catch (error) {
     // TODO: Show errors in UI.
     console.log(error);
+    return;
   }
   editingName.value = false;
 }
