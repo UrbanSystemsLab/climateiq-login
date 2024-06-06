@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-import { defineProps } from 'vue';
-
-import CommonHelp from './CommonHelp.vue';
+import { ref } from 'vue';
 
 const auth = getAuth();
 
 const props = defineProps(['email']);
 
+const emailResent = ref(false);
+
 async function resendEmail() {
+  emailResent.value = false;
   try {
     await sendPasswordResetEmail(auth, props.email);
   } catch (error) {
@@ -16,7 +17,7 @@ async function resendEmail() {
     console.log(error);
     return;
   }
-  alert('Password Reset Email Sent!');
+  emailResent.value = true;
 }
 </script>
 
@@ -31,10 +32,9 @@ async function resendEmail() {
     account@climateiq.org.
   </p>
   <button @click="resendEmail">Resend email</button>
+  <div class="email-resent" v-if="emailResent">Email resent!</div>
   <div class="account-actions">
     <p><RouterLink to="/reset-password">Use another email</RouterLink></p>
     <p><RouterLink to="/login">Log in</RouterLink></p>
   </div>
-
-  <CommonHelp />
 </template>

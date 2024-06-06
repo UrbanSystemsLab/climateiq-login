@@ -2,7 +2,6 @@
 import { getAuth, confirmPasswordReset } from 'firebase/auth';
 import { ref } from 'vue';
 
-import CommonHelp from './CommonHelp.vue';
 import { router } from '../router';
 
 const auth = getAuth();
@@ -25,7 +24,7 @@ async function confirmPassword() {
 
 <template>
   <h2>Reset password</h2>
-  <p>Password requirement (placeholder)</p>
+  <!-- <p>Password requirement (placeholder)</p> -->
   <form @submit.prevent>
     <div class="password">
       <label for="password">New password</label>
@@ -38,6 +37,4 @@ async function confirmPassword() {
     <p><RouterLink to="/sign-up">Create an account</RouterLink></p>
     <p><RouterLink to="/login">Log in</RouterLink></p>
   </div>
-
-  <CommonHelp />
 </template>
