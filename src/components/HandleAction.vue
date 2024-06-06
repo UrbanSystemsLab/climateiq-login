@@ -6,6 +6,7 @@ import {
   checkActionCode,
   getAuth,
   signOut,
+  verifyPasswordResetCode,
 } from 'firebase/auth';
 import { onBeforeMount, ref } from 'vue';
 
@@ -24,6 +25,19 @@ function showError(error: Error) {
   errorMessage.value = error.message;
 }
 
+async function handleResetPassword() {
+  try {
+    await verifyPasswordResetCode(auth, props.oobCode);
+  } catch (error) {
+    showError(error as Error);
+    return;
+  }
+  router.push({
+    path: 'reset-password-new-password',
+    query: { oobCode: props.oobCode },
+  });
+}
+
 async function handleUpdateEmail() {
   try {
     await checkActionCode(auth, props.oobCode);
@@ -40,6 +54,9 @@ async function handleUpdateEmail() {
 
 onBeforeMount(async () => {
   switch (props.mode) {
+    case 'resetPassword':
+      handleResetPassword();
+      break;
     case 'verifyAndChangeEmail':
       handleUpdateEmail();
       break;

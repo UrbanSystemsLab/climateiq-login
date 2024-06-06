@@ -4,6 +4,10 @@ import AccountManagement from './components/AccountManagement.vue';
 import HandleAction from './components/HandleAction.vue';
 import LogIn from './components/LogIn.vue';
 import LogOut from './components/LogOut.vue';
+import ResetPassword from './components/ResetPassword.vue';
+import ResetPasswordCheckEmail from './components/ResetPasswordCheckEmail.vue';
+import ResetPasswordCompleted from './components/ResetPasswordCompleted.vue';
+import ResetPasswordNewPassword from './components/ResetPasswordNewPassword.vue';
 import SignUp from './components/SignUp.vue';
 import SignUpCheckEmail from './components/SignUpCheckEmail.vue';
 import UpdateEmail from './components/UpdateEmail.vue';
@@ -47,6 +51,19 @@ export const router = createRouter({
         redirectUri: route.query.redirect_uri,
       }),
     },
+    // Reset Password
+    { path: '/reset-password', component: ResetPassword },
+    {
+      path: '/reset-password-check-email',
+      component: ResetPasswordCheckEmail,
+      props: (route: RouteLocation) => ({ email: route.query.email }),
+    },
+    {
+      path: '/reset-password-new-password',
+      component: ResetPasswordNewPassword,
+      props: (route: RouteLocation) => ({ oobCode: route.query.oobCode }),
+    },
+    { path: '/reset-password-completed', component: ResetPasswordCompleted },
     // Sign Up
     { path: '/sign-up', component: SignUp },
     { path: '/sign-up-check-email', component: SignUpCheckEmail },
