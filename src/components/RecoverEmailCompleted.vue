@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
 import CommonHelp from './CommonHelp.vue';
-import { router } from '../router';
 
 const props = defineProps(['email']);
-
-function goToResetPassword() {
-  router.push({ path: 'reset-password' });
-}
 </script>
 
 <template>
   <h2>Email restored</h2>
   <p>Your account's email has been reset to {{ props.email }}.</p>
   <p>
-    If you didn't initiate this email change, your account may be compromised
+    If you didn't initiate the original email change, your account may be compromised
     and you should reset your password.
   </p>
-  <button @click="goToResetPassword">Reset password</button>
+  <RouterLink to="/reset-password"><button>Reset password</button></RouterLink>
   <div class="account-actions">
     <p><RouterLink to="/login">Log in</RouterLink></p>
   </div>
