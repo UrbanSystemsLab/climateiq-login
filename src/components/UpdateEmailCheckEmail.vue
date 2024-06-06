@@ -37,7 +37,7 @@ onBeforeMount(async () => {
     your email to verify.
   </p>
   <p>
-    Didn't receive the mail? Check your spam filter for an email from
+    Didn't receive the email? Check your spam filter for an email from
     account@climateiq.org.
   </p>
   <button @click="resendEmail">Resend email</button>
