@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory, RouteLocation } from 'vue-router';
 
 import AccountManagement from './components/AccountManagement.vue';
+import CookieStatement from './components/CookieStatement.vue';
 import HandleAction from './components/HandleAction.vue';
 import LogIn from './components/LogIn.vue';
 import LogOut from './components/LogOut.vue';
+import PrivacyPolicy from './components/PrivacyPolicy.vue';
 import RecoverEmailCompleted from './components/RecoverEmailCompleted.vue';
 import ResetPassword from './components/ResetPassword.vue';
 import ResetPasswordCheckEmail from './components/ResetPasswordCheckEmail.vue';
@@ -11,6 +13,7 @@ import ResetPasswordCompleted from './components/ResetPasswordCompleted.vue';
 import ResetPasswordNewPassword from './components/ResetPasswordNewPassword.vue';
 import SignUp from './components/SignUp.vue';
 import SignUpCheckEmail from './components/SignUpCheckEmail.vue';
+import TermsOfService from './components/TermsOfService.vue';
 import UpdateEmail from './components/UpdateEmail.vue';
 import UpdateEmailCheckEmail from './components/UpdateEmailCheckEmail.vue';
 import UpdateEmailCompleted from './components/UpdateEmailCompleted.vue';
@@ -28,6 +31,8 @@ export const router = createRouter({
     },
     // Account Management
     { path: '/account-management', component: AccountManagement },
+    // Cookie Statement
+    { path: '/cookie-statement', component: CookieStatement },
     // Handle Action
     {
       path: '/action',
@@ -53,6 +58,8 @@ export const router = createRouter({
         redirectUri: route.query.redirect_uri,
       }),
     },
+    // Privacy Policy
+    { path: '/privacy-policy', component: PrivacyPolicy },
     // Recover Email
     {
       path: '/recover-email-completed',
@@ -75,6 +82,8 @@ export const router = createRouter({
     // Sign Up
     { path: '/sign-up', component: SignUp },
     { path: '/sign-up-check-email', component: SignUpCheckEmail },
+    // Terms of Service
+    { path: '/terms-of-service', component: TermsOfService },
     // Update Email
     { path: '/update-email', component: UpdateEmail },
     {

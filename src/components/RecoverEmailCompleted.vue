@@ -8,8 +8,8 @@ const props = defineProps(['email']);
   <h2>Email restored</h2>
   <p>Your account's email has been reset to {{ props.email }}.</p>
   <p>
-    If you didn't initiate the original email change, your account may be compromised
-    and you should reset your password.
+    If you didn't initiate the original email change, your account may be
+    compromised and you should reset your password.
   </p>
   <RouterLink to="/reset-password"><button>Reset password</button></RouterLink>
   <div class="account-actions">
