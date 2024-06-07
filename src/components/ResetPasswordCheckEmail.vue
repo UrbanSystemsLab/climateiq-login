@@ -8,15 +8,18 @@ const props = defineProps(['email']);
 
 const emailResent = ref(false);
 
+const errorMessage = ref();
+
 async function resendEmail() {
   emailResent.value = false;
   try {
     await sendPasswordResetEmail(auth, props.email);
   } catch (error) {
-    // TODO: Show error in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    errorMessage.value = (error as Error).message;
     return;
   }
+  errorMessage.value = null;
   emailResent.value = true;
 }
 </script>
@@ -33,6 +36,7 @@ async function resendEmail() {
   </p>
   <button @click="resendEmail">Resend email</button>
   <div class="email-resent" v-if="emailResent">Email resent!</div>
+  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
   <div class="account-actions">
     <p><RouterLink to="/reset-password">Use another email</RouterLink></p>
     <p><RouterLink to="/login">Log in</RouterLink></p>

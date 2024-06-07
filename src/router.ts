@@ -28,6 +28,7 @@ export const router = createRouter({
       props: (route: RouteLocation) => ({
         redirectUri: route.query.redirect_uri,
       }),
+      alias: '/login',
     },
     // Account Management
     { path: '/account-management', component: AccountManagement },
@@ -40,14 +41,6 @@ export const router = createRouter({
       props: (route: RouteLocation) => ({
         mode: route.query.mode,
         oobCode: route.query.oobCode,
-      }),
-    },
-    // Login
-    {
-      path: '/login',
-      component: LogIn,
-      props: (route: RouteLocation) => ({
-        redirectUri: route.query.redirect_uri,
       }),
     },
     // Logout
