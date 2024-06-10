@@ -13,14 +13,18 @@ const email = ref();
 // Toggles
 const loggedIn = ref(false);
 
+// Error messages
+const errorMessage = ref();
+
 async function resetPassword() {
   try {
     await sendPasswordResetEmail(auth, email.value);
   } catch (error) {
-    // TODO: Show error in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    errorMessage.value = (error as Error).message;
     return;
   }
+  errorMessage.value = null;
   router.push({
     path: 'reset-password-check-email',
     query: { email: email.value },
@@ -38,7 +42,8 @@ onBeforeMount(async () => {
 
 <template>
   <h2>Reset your password</h2>
-  <form @submit.prevent>
+  <form @submit.prevent :class="{ 'error-state': errorMessage }">
+    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
     <div class="email">
       <label for="email">Email</label>
       <input type="text" name="email" v-model="email" />

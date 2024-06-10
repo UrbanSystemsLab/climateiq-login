@@ -10,13 +10,21 @@ const auth = getAuth();
 
 const email = ref();
 
+const emailResent = ref(false);
+
+const errorMessage = ref();
+
 async function resendEmail() {
+  emailResent.value = false;
   try {
     await sendEmailVerification(auth.currentUser!);
   } catch (error) {
-    // TODO: Show error in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    errorMessage.value = (error as Error).message;
+    return;
   }
+  errorMessage.value = null;
+  emailResent.value = true;
 }
 
 const unsubscribeAuthListener = onAuthStateChanged(auth, (user) => {
@@ -39,6 +47,8 @@ onBeforeUnmount(unsubscribeAuthListener);
     account@climateiq.com.
   </p>
   <button @click="resendEmail">Resend email</button>
+  <div class="email-resent" v-if="emailResent">Email resent!</div>
+  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
   <div class="account-actions">
     <p><RouterLink to="/sign-up">Use another email</RouterLink></p>
     <p><RouterLink to="/login">Log in</RouterLink></p>

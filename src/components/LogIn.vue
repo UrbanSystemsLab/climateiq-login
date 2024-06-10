@@ -47,7 +47,7 @@ onBeforeUnmount(unsubscribeAuthListener);
 <template>
   <h2>Login</h2>
   <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message">{{ errorMessage }}</div>
+    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
     <div class="email">
       <label for="email">Email</label>
       <input type="email" v-model="email" />

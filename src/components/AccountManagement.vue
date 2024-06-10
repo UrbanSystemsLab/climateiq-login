@@ -27,6 +27,10 @@ const reloginPassword = ref();
 const editingName = ref(false);
 const showRelogin = ref(false);
 
+// Error messages
+const deleteErrorMessage = ref();
+const updateUserNameErrorMessage = ref();
+
 async function getUserInfo(user: User) {
   email.value = user.email;
   const docSnap = await getDoc(doc(db, 'users', user.uid));
@@ -46,17 +50,19 @@ async function deleteAccount() {
   try {
     await signInWithEmailAndPassword(auth, email.value, reloginPassword.value);
   } catch (error) {
-    // TODO: Show errors in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    deleteErrorMessage.value = (error as Error).message;
     return;
   }
   try {
     await deleteDoc(doc(db, 'users', auth.currentUser!.uid));
     await deleteUser(auth.currentUser!);
   } catch (error) {
-    // TODO: Show errors in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    deleteErrorMessage.value = (error as Error).message;
+    return;
   }
+  deleteErrorMessage.value = null;
 }
 
 async function updateName() {
@@ -72,10 +78,11 @@ async function updateName() {
       lastName.value,
     );
   } catch (error) {
-    // TODO: Show errors in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    updateUserNameErrorMessage.value = (error as Error).message;
     return;
   }
+  updateUserNameErrorMessage.value = null;
   editingName.value = false;
 }
 
@@ -113,7 +120,14 @@ onBeforeUnmount(() => {
     <RouterLink to="reset-password">Reset</RouterLink>
   </div>
   <h3>Personal Information</h3>
-  <form class="name" @submit.prevent>
+  <form
+    class="name"
+    @submit.prevent
+    :class="{ 'error-state': updateUserNameErrorMessage }"
+  >
+    <div class="error-message" v-if="updateUserNameErrorMessage">
+      {{ updateUserNameErrorMessage }}
+    </div>
     <label for="first-name">Name</label>
     <input
       name="first-name"
@@ -134,7 +148,14 @@ onBeforeUnmount(() => {
   <div class="logout">
     <button @click="logout">Logout</button>
   </div>
-  <form class="delete-account" @submit.prevent>
+  <form
+    class="delete-account"
+    @submit.prevent
+    :class="{ 'error-state': deleteErrorMessage }"
+  >
+    <div class="error-message" v-if="deleteErrorMessage">
+      {{ deleteErrorMessage }}
+    </div>
     <div class="relogin-password" v-if="showRelogin">
       <label for="password">Password</label>
       <input

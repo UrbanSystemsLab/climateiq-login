@@ -14,15 +14,18 @@ const currentEmail = ref();
 const newEmail = ref();
 const password = ref();
 
+const errorMessage = ref();
+
 async function updateEmail() {
   try {
     await signInWithEmailAndPassword(auth, currentEmail.value, password.value);
     await verifyBeforeUpdateEmail(auth.currentUser!, newEmail.value);
   } catch (error) {
-    // TODO: Show error in UI.
-    console.log(error);
+    // TODO: Clean up error message.
+    errorMessage.value = (error as Error).message;
     return;
   }
+  errorMessage.value = null;
   router.push({
     path: 'update-email-check-email',
     query: { newEmail: newEmail.value },
@@ -41,7 +44,8 @@ onBeforeMount(async () => {
 
 <template>
   <h2>Update email</h2>
-  <form @submit.prevent>
+  <form @submit.prevent :class="{ 'error-message': errorMessage }">
+    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
     <div class="current-email">
       <label for="current-email">Current email</label>
       <input type="text" name="current-email" :value="currentEmail" readonly />
