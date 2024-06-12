@@ -3,11 +3,8 @@
 
   <p>
     This privacy notice describes how <strong>ClimateIQ</strong> collects and
-    processes personal data about you through<a
-      href="https://www.newschool.edu/"
-    >
-      www.newschool.edu</a
-    >
+    processes personal data about you through
+    <a href="https://climateiq.org/">https://climateiq.org/</a>
     and all other ClimateIQ websites and mobile applications that link to this
     notice (the “Services”); how we use, store, transfer, and protect this
     personal data; and your rights in relation to this personal data. This
@@ -114,7 +111,7 @@
 
   <p>
     For more information about cookies and how we use them on our websites,
-    please <a href="mailto:urbansystemslab@newschool.edu">email us here.</a>
+    please <a href="mailto:info@climateiq.org">email us here.</a>
   </p>
   <h4>1.4 Personal data we obtain from other sources</h4>
 
@@ -303,7 +300,7 @@
 
   <p>
     If you have questions or concerns regarding the way in which your personal
-    data has been used, please contact us at urbansystemslab@newschool.edu or:
+    data has been used, please contact us at info@climateiq.org or:
   </p>
   <p>
     ClimateIQ<br />

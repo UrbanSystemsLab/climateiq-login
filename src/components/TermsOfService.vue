@@ -11,13 +11,11 @@
     York, United States at 66 West 12th Street, New York, NY 10011.
   </p>
   <p>
-    We operate the website<a href="https://climateiq.org/">
-      https://climateiq.org/</a
-    >
-    (the "<strong>Site</strong>"), as well as any other related products and
-    services that refer or link to these legal terms (the "<strong
-      >Legal Terms</strong
-    >") (collectively, the "<strong>Services</strong>").
+    We operate the website
+    <a href="https://climateiq.org/">https://climateiq.org/</a> (the
+    "<strong>Site</strong>"), as well as any other related products and services
+    that refer or link to these legal terms (the "<strong>Legal Terms</strong>")
+    (collectively, the "<strong>Services</strong>").
   </p>
   <p>
     You can contact us by phone at 1-212-229-2036, email at info@climateiq.org,
