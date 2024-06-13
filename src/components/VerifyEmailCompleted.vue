@@ -4,11 +4,11 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { ref } from 'vue';
 
-import { updateUserName } from '../common';
-import { router } from '../router';
+import { REDIRECT_URI_PROP, updateUserName } from '../common';
 
 const auth = getAuth();
 const db = getFirestore(getApp());
+const props = defineProps(REDIRECT_URI_PROP);
 
 // Fields
 const firstName = ref();
@@ -31,7 +31,11 @@ async function submitInfo() {
   }
 
   errorMessage.value = null;
-  router.push('/');
+  goToRedirectUri();
+}
+
+function goToRedirectUri() {
+  window.location.href = props.redirectUri ? props.redirectUri : 'login';
 }
 </script>
 
@@ -57,6 +61,6 @@ async function submitInfo() {
     <button @click="submitInfo" type="submit">Continue</button>
   </form>
   <div class="skip">
-    <RouterLink to="/">Skip</RouterLink>
+    <button @click="goToRedirectUri">Skip</button>
   </div>
 </template>

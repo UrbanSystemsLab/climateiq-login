@@ -39,6 +39,7 @@ export const router = createRouter({
       path: '/action',
       component: HandleAction,
       props: (route: RouteLocation) => ({
+        continueUrl: route.query.continueUrl,
         mode: route.query.mode,
         oobCode: route.query.oobCode,
       }),
@@ -73,8 +74,20 @@ export const router = createRouter({
     },
     { path: '/reset-password-completed', component: ResetPasswordCompleted },
     // Sign Up
-    { path: '/sign-up', component: SignUp },
-    { path: '/sign-up-check-email', component: SignUpCheckEmail },
+    {
+      path: '/sign-up',
+      component: SignUp,
+      props: (route: RouteLocation) => ({
+        redirectUri: route.query.redirect_uri,
+      }),
+    },
+    {
+      path: '/sign-up-check-email',
+      component: SignUpCheckEmail,
+      props: (route: RouteLocation) => ({
+        redirectUri: route.query.redirect_uri,
+      }),
+    },
     // Terms of Service
     { path: '/terms-of-service', component: TermsOfService },
     // Update Email
@@ -86,6 +99,12 @@ export const router = createRouter({
     },
     { path: '/update-email-completed', component: UpdateEmailCompleted },
     // Verify Email (after signup)
-    { path: '/verify-email-completed', component: VerifyEmailCompleted },
+    {
+      path: '/verify-email-completed',
+      component: VerifyEmailCompleted,
+      props: (route: RouteLocation) => ({
+        redirectUri: route.query.redirect_uri,
+      }),
+    },
   ],
 });
