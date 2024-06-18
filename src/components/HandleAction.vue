@@ -15,7 +15,7 @@ import { router } from '../router';
 
 const auth = getAuth();
 
-const props = defineProps(['mode', 'oobCode']);
+const props = defineProps(['continueUrl', 'mode', 'oobCode']);
 
 const errorMessage = ref();
 const showState = ref('loading');
@@ -76,7 +76,19 @@ async function handleVerifyEmail() {
     showError(error as Error);
     return;
   }
-  router.push({ path: 'verify-email-completed' });
+  if (auth.currentUser) {
+    router.push({
+      path: 'verify-email-completed',
+      query: { redirect_uri: props.continueUrl },
+    });
+  } else {
+    router.push({
+      path: 'login',
+      query: {
+        redirect_uri: `verify-email-completed?redirect_uri=${props.continueUrl}`,
+      },
+    });
+  }
 }
 
 onBeforeMount(async () => {

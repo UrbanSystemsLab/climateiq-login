@@ -6,7 +6,10 @@ import {
 } from 'firebase/auth';
 import { onBeforeUnmount, ref } from 'vue';
 
+import { REDIRECT_URI_PROP } from '../common';
+
 const auth = getAuth();
+const props = defineProps(REDIRECT_URI_PROP);
 
 const email = ref();
 
@@ -17,7 +20,10 @@ const errorMessage = ref();
 async function resendEmail() {
   emailResent.value = false;
   try {
-    await sendEmailVerification(auth.currentUser!);
+    await sendEmailVerification(
+      auth.currentUser!,
+      props.redirectUri ? { url: props.redirectUri } : null,
+    );
   } catch (error) {
     // TODO: Clean up error message.
     errorMessage.value = (error as Error).message;
@@ -44,7 +50,7 @@ onBeforeUnmount(unsubscribeAuthListener);
   </p>
   <p>
     Didn't receive the email? Check your spam filter for an email from
-    account@climateiq.com.
+    noreply@climateiq.org.
   </p>
   <button @click="resendEmail">Resend email</button>
   <div class="email-resent" v-if="emailResent">Email resent!</div>

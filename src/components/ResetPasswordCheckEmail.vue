@@ -32,7 +32,7 @@ async function resendEmail() {
   </p>
   <p>
     Didn't receive the email? Check your spam filter for an email from
-    account@climateiq.org.
+    noreply@climateiq.org.
   </p>
   <button @click="resendEmail">Resend email</button>
   <div class="email-resent" v-if="emailResent">Email resent!</div>
