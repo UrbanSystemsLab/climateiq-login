@@ -3,6 +3,7 @@ import cookie from 'cookie';
 import { User, updateProfile } from 'firebase/auth';
 import { doc, Firestore, setDoc } from 'firebase/firestore';
 import moment from 'moment';
+import { ref } from 'vue';
 
 const TOKEN_COOKIE_ID = 'climateiq_access_token';
 const EXPIRY_COOKIE_ID = 'climateiq_access_token_expiry';
@@ -31,12 +32,15 @@ export function deleteCookies() {
   });
 }
 
+export const cookiesSet = ref(false);
+
 export async function getApigeeTokenAndSetCookies(
   firebaseToken: string | null,
 ) {
   const cookies = cookie.parse(document.cookie);
-  if (cookies[TOKEN_COOKIE_ID]) {
+  if (cookies[TOKEN_COOKIE_ID] && cookies[EXPIRY_COOKIE_ID]) {
     if (parseInt(cookies[EXPIRY_COOKIE_ID]) > moment().unix()) {
+      cookiesSet.value = true;
       return;
     }
   }
@@ -64,6 +68,7 @@ export async function getApigeeTokenAndSetCookies(
     String(moment().unix() + parseInt(response.data['expires_in'])),
     { maxAge: response.data['expires_in'], path: '/' },
   );
+  cookiesSet.value = true;
 }
 
 export async function updateUserName(

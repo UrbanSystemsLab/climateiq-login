@@ -5,9 +5,9 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { onBeforeUnmount, ref } from 'vue';
+import { onBeforeUnmount, ref, watch } from 'vue';
 
-import { REDIRECT_URI_PROP } from '../common';
+import { cookiesSet, REDIRECT_URI_PROP } from '../common';
 import { router } from '../router';
 
 const auth = getAuth();
@@ -30,13 +30,27 @@ async function signIn() {
   errorMessage.value = null;
 }
 
+function goToRedirectUri() {
+  if (props.redirectUri) {
+    window.location.href = props.redirectUri;
+  } else {
+    router.push({ path: '/account-management' });
+  }
+}
+
 // Listening for auth state changes.
 const unsubscribeAuthListener = onAuthStateChanged(auth, (user) => {
   if (user) {
-    if (props.redirectUri) {
-      window.location.href = props.redirectUri;
+    if (cookiesSet.value) {
+      goToRedirectUri();
     } else {
-      router.push({ path: '/account-management' });
+      // immediate does not work: https://github.com/vuejs/vue/issues/9501
+      const unwatch = watch(cookiesSet, (newValue) => {
+        if (newValue) {
+          unwatch();
+          goToRedirectUri();
+        }
+      });
     }
   }
 });

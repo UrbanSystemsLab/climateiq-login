@@ -2,7 +2,7 @@
 import { getAuth, signOut } from 'firebase/auth';
 import { onBeforeMount } from 'vue';
 
-import { REDIRECT_URI_PROP } from '../common';
+import { deleteCookies, REDIRECT_URI_PROP } from '../common';
 import { router } from '../router';
 
 const auth = getAuth();
@@ -11,6 +11,7 @@ const props = defineProps(REDIRECT_URI_PROP);
 
 async function logOut() {
   await signOut(auth);
+  deleteCookies();
   if (props.redirectUri) {
     window.location.href = props.redirectUri;
   } else {
