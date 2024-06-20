@@ -8,7 +8,7 @@ import {
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { ref } from 'vue';
 
-import { REDIRECT_URI_PROP } from '../common';
+import { createUserOnClimasens, REDIRECT_URI_PROP } from '../common';
 import CommonDisclaimer from './CommonDisclaimer.vue';
 import { router } from '../router';
 
@@ -37,6 +37,13 @@ async function signUp() {
   }
   try {
     await setDoc(doc(db, 'users', userCredential.user.uid), {});
+  } catch (error) {
+    // TODO: Clean up error message.
+    errorMessage.value = (error as Error).message;
+    return;
+  }
+  try {
+    await createUserOnClimasens(userCredential.user.uid);
   } catch (error) {
     // TODO: Clean up error message.
     errorMessage.value = (error as Error).message;

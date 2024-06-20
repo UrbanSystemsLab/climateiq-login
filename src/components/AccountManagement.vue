@@ -11,7 +11,7 @@ import {
 import { doc, deleteDoc, getDoc, getFirestore } from 'firebase/firestore';
 import { onBeforeUnmount, ref } from 'vue';
 
-import { updateUserName } from '../common';
+import { deleteUserOnClimasens, updateUserName } from '../common';
 import { router } from '../router';
 
 const auth = getAuth();
@@ -55,6 +55,7 @@ async function deleteAccount() {
     return;
   }
   try {
+    await deleteUserOnClimasens(auth.currentUser!.uid);
     await deleteDoc(doc(db, 'users', auth.currentUser!.uid));
     await deleteUser(auth.currentUser!);
   } catch (error) {

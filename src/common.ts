@@ -13,6 +13,8 @@ const TOKEN_API_ENDPOINT_URI = 'https://34.49.55.140.nip.io/oauth/token';
 // issued by the authentication app is also present in the request.
 const AUTH_CODE =
   'cDF1QXM4T3NGdDI2emlUYWIzQmt2cFdNOUJIbDVyUmNjT25CZHhzVFIya3MwVEZ0OmNTNU1WSFFjTkI4VHJ0UXJLOVZpc09BNDFNUGVRQUtjWHc5ZmRPcTZIWFN4aDBUdU1Va0h5Tk9wZ0ZsYTBpYnI=';
+const CLIMASENS_USER_API_ENDPOINT_URI =
+  'http://dashboard.climateiq.org/user/management/';
 
 export const REDIRECT_URI_PROP = {
   redirectUri: {
@@ -89,5 +91,17 @@ export async function updateUserName(
   await setDoc(doc(db, 'users', currentUser.uid), {
     first_name: firstName,
     last_name: lastName,
+  });
+}
+
+export async function createUserOnClimasens(userId: string) {
+  await axios.post(CLIMASENS_USER_API_ENDPOINT_URI, null, {
+    headers: { 'climateiq-user-id': userId },
+  });
+}
+
+export async function deleteUserOnClimasens(userId: string) {
+  await axios.delete(CLIMASENS_USER_API_ENDPOINT_URI, {
+    headers: { 'climateiq-user-id': userId },
   });
 }
