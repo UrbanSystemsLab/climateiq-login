@@ -85,7 +85,7 @@ async function handleVerifyEmail() {
     router.push({
       path: 'login',
       query: {
-        redirect_uri: `verify-email-completed?redirect_uri=${props.continueUrl}`,
+        redirect_uri: `verify-email-completed?redirect_uri=${props.continueUrl ? props.continueUrl : ''}`,
       },
     });
   }

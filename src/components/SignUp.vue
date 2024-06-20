@@ -43,7 +43,7 @@ async function signUp() {
     return;
   }
   try {
-    await createUserOnClimasens(userCredential.user.uid);
+    await createUserOnClimasens();
   } catch (error) {
     // TODO: Clean up error message.
     errorMessage.value = (error as Error).message;

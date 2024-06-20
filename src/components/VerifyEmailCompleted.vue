@@ -4,7 +4,8 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { ref } from 'vue';
 
-import { REDIRECT_URI_PROP, updateUserName } from '../common';
+import { cookiesSet, REDIRECT_URI_PROP, updateUserName } from '../common';
+import { router } from '../router';
 
 const auth = getAuth();
 const db = getFirestore(getApp());
@@ -34,8 +35,13 @@ async function submitInfo() {
   goToRedirectUri();
 }
 
-function goToRedirectUri() {
-  window.location.href = props.redirectUri ? props.redirectUri : 'login';
+async function goToRedirectUri() {
+  await cookiesSet;
+  if (props.redirectUri) {
+    window.location.href = props.redirectUri;
+  } else {
+    router.push({ path: '/login' });
+  }
 }
 </script>
 

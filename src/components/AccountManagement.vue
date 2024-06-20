@@ -55,7 +55,7 @@ async function deleteAccount() {
     return;
   }
   try {
-    await deleteUserOnClimasens(auth.currentUser!.uid);
+    await deleteUserOnClimasens();
     await deleteDoc(doc(db, 'users', auth.currentUser!.uid));
     await deleteUser(auth.currentUser!);
   } catch (error) {
