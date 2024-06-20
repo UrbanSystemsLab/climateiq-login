@@ -21,6 +21,8 @@ const unsubscribeAuthListener = onAuthStateChanged(
       await getApigeeTokenAndSetCookies(accessToken);
     } else {
       // User is signed out.
+      // Cookies are also deleted by the LogOut component, but this is here to
+      // catch any alternate logout paths.
       deleteCookies();
     }
   },
