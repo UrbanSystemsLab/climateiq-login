@@ -1,9 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import cookie from 'cookie';
 import { User, updateProfile } from 'firebase/auth';
 import { doc, Firestore, setDoc } from 'firebase/firestore';
 import moment from 'moment';
-import { ref } from 'vue';
 
 const TOKEN_COOKIE_ID = 'climateiq_access_token';
 const EXPIRY_COOKIE_ID = 'climateiq_access_token_expiry';
@@ -13,6 +12,8 @@ const TOKEN_API_ENDPOINT_URI = 'https://34.49.55.140.nip.io/oauth/token';
 // issued by the authentication app is also present in the request.
 const AUTH_CODE =
   'cDF1QXM4T3NGdDI2emlUYWIzQmt2cFdNOUJIbDVyUmNjT25CZHhzVFIya3MwVEZ0OmNTNU1WSFFjTkI4VHJ0UXJLOVZpc09BNDFNUGVRQUtjWHc5ZmRPcTZIWFN4aDBUdU1Va0h5Tk9wZ0ZsYTBpYnI=';
+const CLIMASENS_USER_API_ENDPOINT_URI =
+  'http://dashboard.climateiq.org/user/management/';
 
 export const REDIRECT_URI_PROP = {
   redirectUri: {
@@ -32,7 +33,12 @@ export function deleteCookies() {
   });
 }
 
-export const cookiesSet = ref(false);
+let cookiesSetResolve: Function;
+let cookiesSetReject: Function;
+export const cookiesSet = new Promise((resolve, reject) => {
+  cookiesSetResolve = resolve;
+  cookiesSetReject = reject;
+});
 
 export async function getApigeeTokenAndSetCookies(
   firebaseToken: string | null,
@@ -40,24 +46,31 @@ export async function getApigeeTokenAndSetCookies(
   const cookies = cookie.parse(document.cookie);
   if (cookies[TOKEN_COOKIE_ID] && cookies[EXPIRY_COOKIE_ID]) {
     if (parseInt(cookies[EXPIRY_COOKIE_ID]) > moment().unix()) {
-      cookiesSet.value = true;
+      cookiesSetResolve();
       return;
     }
   }
 
-  const response = await axios.post(
-    TOKEN_API_ENDPOINT_URI,
-    {
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion: firebaseToken,
-    },
-    {
-      headers: {
-        Authorization: `Basic ${AUTH_CODE}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
+  let response: AxiosResponse<any, any>;
+  try {
+    response = await axios.post(
+      TOKEN_API_ENDPOINT_URI,
+      {
+        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        assertion: firebaseToken,
       },
-    },
-  );
+      {
+        headers: {
+          Authorization: `Basic ${AUTH_CODE}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
+  } catch (error) {
+    cookiesSetReject(error);
+    return;
+  }
+
   document.cookie = cookie.serialize(
     TOKEN_COOKIE_ID,
     response.data['access_token'],
@@ -68,7 +81,7 @@ export async function getApigeeTokenAndSetCookies(
     String(moment().unix() + parseInt(response.data['expires_in'])),
     { maxAge: response.data['expires_in'], path: '/' },
   );
-  cookiesSet.value = true;
+  cookiesSetResolve();
 }
 
 export async function updateUserName(
@@ -90,4 +103,14 @@ export async function updateUserName(
     first_name: firstName,
     last_name: lastName,
   });
+}
+
+export async function createUserOnClimasens() {
+  await cookiesSet;
+  await axios.post(CLIMASENS_USER_API_ENDPOINT_URI);
+}
+
+export async function deleteUserOnClimasens() {
+  await cookiesSet;
+  await axios.delete(CLIMASENS_USER_API_ENDPOINT_URI);
 }
