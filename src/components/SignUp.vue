@@ -8,9 +8,10 @@ import {
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { ref } from 'vue';
 
-import { createUserOnClimasens, REDIRECT_URI_PROP } from '../common';
+import { REDIRECT_URI_PROP } from '../common';
 import CommonDisclaimer from './CommonDisclaimer.vue';
 import { router } from '../router';
+import { createUserOnClimasens } from '../user-utils';
 
 const auth = getAuth();
 const db = getFirestore(getApp());
