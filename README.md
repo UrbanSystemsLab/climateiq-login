@@ -20,6 +20,7 @@ Install
 then:
 
 ```bash
+firebase login
 npm run build
 firebase deploy --project climateiq
 ```
@@ -29,3 +30,29 @@ If you run into any errors, try logging into Firebase again:
 ```bash
 firebase login --reauth
 ```
+
+## Update Password Configuration
+
+The password configuration controls the limits on user password values (e.g., minimum
+length).
+
+To update the rules, edit `password-config.json`, which is a JSON file describing an
+object with [these properties](https://firebase.google.com/docs/reference/admin/node/firebase-admin.auth.customstrengthoptionsconfig.md#customstrengthoptionsconfig_interface).
+
+Then, run:
+
+```bash
+firebase login
+npm run updatePasswordConfig
+```
+
+If you have deploy permissions, then you will have update password configuration
+permissions.
+
+If you run into any errors, try logging into Firebase again:
+
+```bash
+firebase login --reauth
+```
+
+For posterity, please also check in any changes to `password-config.json`.
