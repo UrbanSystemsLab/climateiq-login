@@ -248,8 +248,8 @@
   <h3>4. How your personal data is protected and stored</h3>
 
   <p>
-    We implement technical and organizational measures designed to
-    safeguard the personal data we process. These measures are aimed at ensuring
+    We implement technical and organizational measures designed to safeguard the
+    personal data we process. These measures are aimed at ensuring
     the ongoing integrity and confidentiality of personal data.
   </p>
   <p>
