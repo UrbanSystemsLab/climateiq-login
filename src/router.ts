@@ -1,24 +1,14 @@
 import { createRouter, createWebHistory, RouteLocation } from 'vue-router';
 
-import AccountManagement from './components/AccountManagement.vue';
-import CookieStatement from './components/CookieStatement.vue';
-import HandleAction from './components/HandleAction.vue';
 import LogIn from './components/LogIn.vue';
 import LogOut from './components/LogOut.vue';
-import PrivacyPolicy from './components/PrivacyPolicy.vue';
-import RecoverEmailCompleted from './components/RecoverEmailCompleted.vue';
-import ResetPassword from './components/ResetPassword.vue';
-import ResetPasswordCheckEmail from './components/ResetPasswordCheckEmail.vue';
-import ResetPasswordCompleted from './components/ResetPasswordCompleted.vue';
-import ResetPasswordNewPassword from './components/ResetPasswordNewPassword.vue';
-import SignUp from './components/SignUp.vue';
-import SignUpCheckEmail from './components/SignUpCheckEmail.vue';
-import TermsOfService from './components/TermsOfService.vue';
-import UpdateEmail from './components/UpdateEmail.vue';
-import UpdateEmailCheckEmail from './components/UpdateEmailCheckEmail.vue';
-import UpdateEmailCompleted from './components/UpdateEmailCompleted.vue';
-import VerifyEmailCompleted from './components/VerifyEmailCompleted.vue';
 
+// All the routes except LogIn and LogOut are dynamically loaded because we expect 99%
+// of traffic to be logging in and logging out, which doesn't require the rest of the
+// app to be loaded.
+// This also triggers Rollup to chunk the files appropriately when building for prod -
+// we don't need to load large dependencies like Firestore unless the user is visiting
+// one of the routes that requires it.
 export const router = createRouter({
   history: createWebHistory('/auth/'),
   routes: [
@@ -31,13 +21,19 @@ export const router = createRouter({
       alias: '/login',
     },
     // Account Management
-    { path: '/account-management', component: AccountManagement },
+    {
+      path: '/account-management',
+      component: () => import('./components/AccountManagement.vue'),
+    },
     // Cookie Statement
-    { path: '/cookie-statement', component: CookieStatement },
+    {
+      path: '/cookie-statement',
+      component: () => import('./components/CookieStatement.vue'),
+    },
     // Handle Action
     {
       path: '/action',
-      component: HandleAction,
+      component: () => import('./components/HandleAction.vue'),
       props: (route: RouteLocation) => ({
         continueUrl: route.query.continueUrl,
         mode: route.query.mode,
@@ -53,55 +49,73 @@ export const router = createRouter({
       }),
     },
     // Privacy Policy
-    { path: '/privacy-policy', component: PrivacyPolicy },
+    {
+      path: '/privacy-policy',
+      component: () => import('./components/PrivacyPolicy.vue'),
+    },
     // Recover Email
     {
       path: '/recover-email-completed',
-      component: RecoverEmailCompleted,
+      component: () => import('./components/RecoverEmailCompleted.vue'),
       props: (route: RouteLocation) => ({ email: route.query.email }),
     },
     // Reset Password
-    { path: '/reset-password', component: ResetPassword },
+    {
+      path: '/reset-password',
+      component: () => import('./components/ResetPassword.vue'),
+    },
     {
       path: '/reset-password-check-email',
-      component: ResetPasswordCheckEmail,
+      component: () => import('./components/ResetPasswordCheckEmail.vue'),
       props: (route: RouteLocation) => ({ email: route.query.email }),
     },
     {
       path: '/reset-password-new-password',
-      component: ResetPasswordNewPassword,
+      component: () => import('./components/ResetPasswordNewPassword.vue'),
       props: (route: RouteLocation) => ({ oobCode: route.query.oobCode }),
     },
-    { path: '/reset-password-completed', component: ResetPasswordCompleted },
+    {
+      path: '/reset-password-completed',
+      component: () => import('./components/ResetPasswordCompleted.vue'),
+    },
     // Sign Up
     {
       path: '/sign-up',
-      component: SignUp,
+      component: () => import('./components/SignUp.vue'),
       props: (route: RouteLocation) => ({
         redirectUri: route.query.redirect_uri,
       }),
     },
     {
       path: '/sign-up-check-email',
-      component: SignUpCheckEmail,
+      component: () => import('./components/SignUpCheckEmail.vue'),
       props: (route: RouteLocation) => ({
         redirectUri: route.query.redirect_uri,
       }),
     },
     // Terms of Service
-    { path: '/terms-of-service', component: TermsOfService },
+    {
+      path: '/terms-of-service',
+      component: () => import('./components/TermsOfService.vue'),
+    },
     // Update Email
-    { path: '/update-email', component: UpdateEmail },
+    {
+      path: '/update-email',
+      component: () => import('./components/UpdateEmail.vue'),
+    },
     {
       path: '/update-email-check-email',
-      component: UpdateEmailCheckEmail,
+      component: () => import('./components/UpdateEmailCheckEmail.vue'),
       props: (route: RouteLocation) => ({ newEmail: route.query.newEmail }),
     },
-    { path: '/update-email-completed', component: UpdateEmailCompleted },
+    {
+      path: '/update-email-completed',
+      component: () => import('./components/UpdateEmailCompleted.vue'),
+    },
     // Verify Email (after signup)
     {
       path: '/verify-email-completed',
-      component: VerifyEmailCompleted,
+      component: () => import('./components/VerifyEmailCompleted.vue'),
       props: (route: RouteLocation) => ({
         redirectUri: route.query.redirect_uri,
       }),

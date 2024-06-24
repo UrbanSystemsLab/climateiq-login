@@ -4,8 +4,9 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { ref } from 'vue';
 
-import { cookiesSet, REDIRECT_URI_PROP, updateUserName } from '../common';
+import { cookiesSet, REDIRECT_URI_PROP } from '../common';
 import { router } from '../router';
+import { updateUserName } from '../user-utils';
 
 const auth = getAuth();
 const db = getFirestore(getApp());

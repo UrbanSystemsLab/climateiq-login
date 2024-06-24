@@ -11,8 +11,8 @@ import {
 import { doc, deleteDoc, getDoc, getFirestore } from 'firebase/firestore';
 import { onBeforeUnmount, ref } from 'vue';
 
-import { deleteUserOnClimasens, updateUserName } from '../common';
 import { router } from '../router';
+import { deleteUserOnClimasens, updateUserName } from '../user-utils';
 
 const auth = getAuth();
 const db = getFirestore(getApp());
