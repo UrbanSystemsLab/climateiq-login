@@ -249,8 +249,8 @@
 
   <p>
     We implement technical and organizational measures designed to safeguard the
-    personal data we process. These measures are aimed at ensuring
-    the ongoing integrity and confidentiality of personal data.
+    personal data we process. These measures are aimed at ensuring the ongoing
+    integrity and confidentiality of personal data.
   </p>
   <p>
     We will retain your personal data for as long as we have a relationship with
