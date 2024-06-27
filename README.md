@@ -8,7 +8,7 @@ This is the ClimateIQ Authentication Service app.
 npm run dev -- --host
 ```
 
-## Deploy to Firebase Hosting
+## Deploy to Firebase Hosting<a name="deploy"></a>
 
 Generally, you need Editor or Owner permissions to ClimateIQ GCP to deploy to Firebase
 Hosting. See [here](https://firebase.corp.google.com/project/climateiq/settings/iam) for
@@ -46,8 +46,11 @@ firebase login
 npm run updatePasswordConfig
 ```
 
+> **_NOTE:__** Running this command will force any users whose passwords do not meet the
+> new requirements to update their password on next sign in.**
+
 If you have deploy permissions, then you will have update password configuration
-permissions.
+permissions. For more detail on permissions, see the [section on deploying](#deploy).
 
 If you run into any errors, try logging into Firebase again:
 
