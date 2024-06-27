@@ -46,8 +46,8 @@ firebase login
 npm run updatePasswordConfig
 ```
 
-> **_NOTE:__** Running this command will force any users whose passwords do not meet the
-> new requirements to update their password on next sign in.**
+> **_NOTE:_** Running this command will force any users whose passwords do not meet the
+> new requirements to update their password on next sign in.
 
 If you have deploy permissions, then you will have update password configuration
 permissions. For more detail on permissions, see the [section on deploying](#deploy).
