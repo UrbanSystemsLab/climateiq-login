@@ -22,10 +22,12 @@ export function deleteCookies() {
   document.cookie = cookie.serialize(TOKEN_COOKIE_ID, '', {
     maxAge: -1,
     path: '/',
+    domain: 'climateiq.org',
   });
   document.cookie = cookie.serialize(EXPIRY_COOKIE_ID, '', {
     maxAge: -1,
     path: '/',
+    domain: 'climateiq.org',
   });
 }
 
@@ -70,12 +72,12 @@ export async function getApigeeTokenAndSetCookies(
   document.cookie = cookie.serialize(
     TOKEN_COOKIE_ID,
     response.data['access_token'],
-    { maxAge: response.data['expires_in'], path: '/' },
+    { maxAge: response.data['expires_in'], path: '/', domain: 'climateiq.org' },
   );
   document.cookie = cookie.serialize(
     EXPIRY_COOKIE_ID,
     String(moment().unix() + parseInt(response.data['expires_in'])),
-    { maxAge: response.data['expires_in'], path: '/' },
+    { maxAge: response.data['expires_in'], path: '/', domain: 'climateiq.org' },
   );
   cookiesSetResolve();
 }
