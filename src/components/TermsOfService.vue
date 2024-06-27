@@ -569,7 +569,7 @@
   <p>
     We care about data privacy and security. Please review our Privacy Policy:
     <RouterLink to="/privacy-policy">
-      http://dashboard.climateiq.org/auth/privacy-policy</RouterLink
+      https://auth.climateiq.org/privacy-policy</RouterLink
     >. By using the Services, you agree to be bound by our Privacy Policy, which
     is incorporated into these Legal Terms. Please be advised the Services are
     hosted in the United States. If you access the Services from any other

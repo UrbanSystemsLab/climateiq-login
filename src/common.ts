@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const TOKEN_COOKIE_ID = 'climateiq_access_token';
 const EXPIRY_COOKIE_ID = 'climateiq_access_token_expiry';
-const TOKEN_API_ENDPOINT_URI = 'https://34.49.55.140.nip.io/oauth/token';
+const TOKEN_API_ENDPOINT_URI = 'https://api.climateiq.org/oauth/token';
 // This authorization code is used for identifying this user authentication app. The
 // Apigee /oauth/token endpoint will only return an API access token if a valid JWT
 // issued by the authentication app is also present in the request.
