@@ -10,7 +10,7 @@ import LogOut from './components/LogOut.vue';
 // we don't need to load large dependencies like Firestore unless the user is visiting
 // one of the routes that requires it.
 export const router = createRouter({
-  history: createWebHistory('/auth/'),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',

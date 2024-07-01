@@ -5,7 +5,7 @@ import { Firestore, doc, setDoc } from 'firebase/firestore';
 import { cookiesSet } from './common';
 
 const CLIMASENS_USER_API_ENDPOINT_URI =
-  'http://dashboard.climateiq.org/user/management/';
+  'https://api.climateiq.org/user/management/';
 
 export async function updateUserName(
   currentUser: User,
@@ -30,10 +30,18 @@ export async function updateUserName(
 
 export async function createUserOnClimasens() {
   await cookiesSet;
-  await axios.post(CLIMASENS_USER_API_ENDPOINT_URI);
+  await axios.post(
+    CLIMASENS_USER_API_ENDPOINT_URI,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
 }
 
 export async function deleteUserOnClimasens() {
   await cookiesSet;
-  await axios.delete(CLIMASENS_USER_API_ENDPOINT_URI);
+  await axios.delete(CLIMASENS_USER_API_ENDPOINT_URI, {
+    withCredentials: true,
+  });
 }
