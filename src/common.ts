@@ -10,6 +10,8 @@ const TOKEN_API_ENDPOINT_URI = 'https://api.climateiq.org/oauth/token';
 // issued by the authentication app is also present in the request.
 const AUTH_CODE =
   'cDF1QXM4T3NGdDI2emlUYWIzQmt2cFdNOUJIbDVyUmNjT25CZHhzVFIya3MwVEZ0OmNTNU1WSFFjTkI4VHJ0UXJLOVZpc09BNDFNUGVRQUtjWHc5ZmRPcTZIWFN4aDBUdU1Va0h5Tk9wZ0ZsYTBpYnI=';
+const SAML_API_ENDPOINT_URI =
+  'https://api.climateiq.org/apigee-saml-idp/authcomplete';
 
 export const REDIRECT_URI_PROP = {
   redirectUri: {
@@ -80,4 +82,24 @@ export async function getApigeeTokenAndSetCookies(
     { maxAge: response.data['expires_in'], path: '/', domain: 'climateiq.org' },
   );
   cookiesSetResolve();
+}
+
+export async function getSamlSignedResponse(
+  firebaseToken: string | null,
+  sessionId: string,
+): Promise<{ [id: string]: string }> {
+  const response = await axios.post(
+    SAML_API_ENDPOINT_URI,
+    {
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: firebaseToken,
+      session_id: sessionId,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  );
+  return response.data;
 }

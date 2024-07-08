@@ -17,6 +17,7 @@ export const router = createRouter({
       component: LogIn,
       props: (route: RouteLocation) => ({
         redirectUri: route.query.redirect_uri,
+        apigeeSamlIdpSessionId: route.query.apigee_saml_idp_session_id,
       }),
       alias: '/login',
     },
