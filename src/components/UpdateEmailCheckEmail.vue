@@ -33,21 +33,33 @@ onBeforeMount(async () => {
 });
 </script>
 
+<style scoped>
+.update-email-check-email {
+  width: var(--narrow-width);
+}
+
+.primary-action {
+  margin-bottom: 1.25rem;
+}
+</style>
+
 <template>
-  <h2>Check your email</h2>
-  <p>
-    We've sent an email to {{ props.newEmail }}. Please click on the link in
-    your email to verify.
-  </p>
-  <p>
-    Didn't receive the email? Check your spam filter for an email from
-    noreply@climateiq.org.
-  </p>
-  <button @click="resendEmail">Resend email</button>
-  <div class="email-resent" v-if="emailResent">Email resent!</div>
-  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-  <div class="account-actions">
-    <p><RouterLink to="/update-email">Use another email</RouterLink></p>
-    <p><RouterLink to="/login">Log in</RouterLink></p>
+  <div class="update-email-check-email">
+    <h2>Check your email</h2>
+    <p class="sent-email">
+      We've sent an email to <span class="email">{{ props.newEmail }}</span
+      >. Please click on the link in your email to verify.
+    </p>
+    <p>
+      Didn't receive the email? Check your spam filter for an email from
+      noreply@climateiq.org.
+    </p>
+    <button @click="resendEmail" class="primary-action">Resend email</button>
+    <div class="email-resent" v-if="emailResent">Email resent!</div>
+    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+    <div class="account-actions">
+      <p><RouterLink to="/update-email">Use another email</RouterLink></p>
+      <p><RouterLink to="/login">Log in</RouterLink></p>
+    </div>
   </div>
 </template>

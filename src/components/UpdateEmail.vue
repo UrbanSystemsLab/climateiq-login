@@ -42,25 +42,52 @@ onBeforeMount(async () => {
 });
 </script>
 
+<style scoped>
+.update-email {
+  width: var(--narrow-width);
+}
+
+.password {
+  margin-bottom: 0;
+}
+
+.will-send-email {
+  color: var(--secondary-text-color);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+</style>
+
 <template>
-  <h2>Update email</h2>
-  <form @submit.prevent :class="{ 'error-message': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="current-email">
-      <label for="current-email">Current email</label>
-      <input type="text" name="current-email" :value="currentEmail" readonly />
-    </div>
+  <div class="update-email">
+    <h2>Update email</h2>
+    <form
+      @submit.prevent="updateEmail"
+      :class="{ 'error-state': errorMessage }"
+    >
+      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+      <div class="current-email">
+        <label for="current-email">Current email</label>
+        <input type="email" id="current-email" :value="currentEmail" readonly />
+      </div>
 
-    <div class="new-email">
-      <label for="new-email">New email</label>
-      <input type="text" name="new-email" v-model="newEmail" required />
-    </div>
+      <div class="new-email">
+        <label for="new-email">New email</label>
+        <input type="email" id="new-email" v-model="newEmail" required />
+      </div>
 
-    <div class="password">
-      <label for="password">Password</label>
-      <input type="password" name="password" v-model="password" required />
-    </div>
-    <p>We'll send you an email verification link.</p>
-    <button @click="updateEmail" type="submit">Continue</button>
-  </form>
+      <div class="password">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+      <p class="will-send-email">We'll send you an email verification link.</p>
+      <button type="submit" class="primary-action">Continue</button>
+    </form>
+  </div>
 </template>

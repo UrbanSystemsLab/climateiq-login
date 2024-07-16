@@ -42,21 +42,39 @@ const unsubscribeAuthListener = onAuthStateChanged(auth, (user) => {
 onBeforeUnmount(unsubscribeAuthListener);
 </script>
 
+<style scoped>
+.sign-up-check-email {
+  width: var(--narrow-width);
+}
+
+.email-resent {
+  color: var(--secondary-text-color);
+  font-size: 0.8rem;
+}
+
+.email-resent,
+.error-message {
+  margin-top: 1.25rem;
+}
+</style>
+
 <template>
-  <h2>Check your email</h2>
-  <p>
-    We've sent an email to {{ email }}. Please click on the link in your email
-    to verify.
-  </p>
-  <p>
-    Didn't receive the email? Check your spam filter for an email from
-    noreply@climateiq.org.
-  </p>
-  <button @click="resendEmail">Resend email</button>
-  <div class="email-resent" v-if="emailResent">Email resent!</div>
-  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-  <div class="account-actions">
-    <p><RouterLink to="/sign-up">Use another email</RouterLink></p>
-    <p><RouterLink to="/login">Log in</RouterLink></p>
+  <div class="sign-up-check-email">
+    <h2>Check your email</h2>
+    <p class="sent-email">
+      We've sent an email to <span class="email">{{ email }}</span
+      >. Please click on the link in your email to verify.
+    </p>
+    <p class="didnt-receive-email">
+      Didn't receive the email? Check your spam filter for an email from
+      noreply@climateiq.org.
+    </p>
+    <button @click="resendEmail" class="primary-action">Resend email</button>
+    <div class="email-resent" v-if="emailResent">Email resent!</div>
+    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+    <div class="account-actions">
+      <p><RouterLink to="/sign-up">Use another email</RouterLink></p>
+      <p><RouterLink to="/login">Log in</RouterLink></p>
+    </div>
   </div>
 </template>

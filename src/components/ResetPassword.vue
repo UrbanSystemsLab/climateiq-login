@@ -40,21 +40,38 @@ onBeforeMount(async () => {
 });
 </script>
 
+<style scoped>
+.reset-password {
+  width: var(--narrow-width);
+}
+</style>
+
 <template>
-  <h2>Reset your password</h2>
-  <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="email">
-      <label for="email">Email</label>
-      <input type="text" name="email" v-model="email" />
+  <div class="reset-password">
+    <h2>Reset your password</h2>
+    <form
+      @submit.prevent="resetPassword"
+      :class="{ 'error-state': errorMessage }"
+    >
+      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+      <div class="email">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          v-model="email"
+          autocomplete="username"
+          required
+        />
+      </div>
+
+      <button type="submit" class="primary-action">Continue</button>
+    </form>
+    <div class="account-actions" v-if="!loggedIn">
+      <p><RouterLink to="/sign-up">Create an account</RouterLink></p>
+      <p><RouterLink to="/login">Log in</RouterLink></p>
     </div>
 
-    <button @click="resetPassword" type="submit">Continue</button>
-  </form>
-  <div class="account-actions" v-if="!loggedIn">
-    <p><RouterLink to="/sign-up">Create an account</RouterLink></p>
-    <p><RouterLink to="/login">Log in</RouterLink></p>
+    <CommonHelp />
   </div>
-
-  <CommonHelp />
 </template>

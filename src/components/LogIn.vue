@@ -77,35 +77,60 @@ const unsubscribeAuthListener = onAuthStateChanged(auth, async (user) => {
 onBeforeUnmount(unsubscribeAuthListener);
 </script>
 
+<style scoped>
+.login {
+  width: var(--narrow-width);
+}
+
+.reset-password-link {
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+</style>
+
 <template>
-  <div class="logged-out" v-show="!loggedIn">
+  <div class="login logged-out" v-show="!loggedIn">
     <h2>Login</h2>
-    <form @submit.prevent :class="{ 'error-state': errorMessage }">
+    <form @submit.prevent="signIn" :class="{ 'error-state': errorMessage }">
       <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
       <div class="email">
         <label for="email">Email</label>
-        <input type="email" v-model="email" />
+        <input
+          type="email"
+          id="email"
+          v-model="email"
+          autocomplete="username"
+          required
+        />
       </div>
 
       <div class="password">
         <label for="password">Password</label>
-        <input type="password" v-model="password" />
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          autocomplete="current-password"
+          required
+        />
       </div>
 
-      <div class="reset-password">
+      <div class="reset-password-link">
         <RouterLink to="reset-password">Reset Password</RouterLink>
       </div>
 
-      <button @click="signIn" type="submit">Continue</button>
+      <button type="submit" class="primary-action">Continue</button>
 
       <CommonDisclaimer />
     </form>
     <div class="no-account-sign-up">
       <p>Don't have an account?</p>
-      <RouterLink to="/sign-up">Create account</RouterLink>
+      <RouterLink to="/sign-up" class="secondary-action"
+        >Create account</RouterLink
+      >
     </div>
   </div>
-  <div class="logged-in" v-show="loggedIn">
+  <div class="login logged-in" v-show="loggedIn">
     <h2>Logging in...</h2>
   </div>
   <!-- Because this action results in a 302 redirect, must run request in the foreground

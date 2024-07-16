@@ -1,6 +1,14 @@
-<script setup lang="ts"></script>
+<style scoped>
+.reset-password-completed {
+  width: var(--narrow-width);
+}
+</style>
 
 <template>
-  <h2>Reset password completed!</h2>
-  <div><RouterLink to="/login">Log in</RouterLink></div>
+  <div class="reset-password-completed">
+    <h2>Reset password completed!</h2>
+    <div>
+      <RouterLink to="/login" class="primary-action">Log in</RouterLink>
+    </div>
+  </div>
 </template>

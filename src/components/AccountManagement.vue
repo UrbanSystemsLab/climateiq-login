@@ -107,65 +107,169 @@ onBeforeUnmount(() => {
 });
 </script>
 
+<style scoped>
+.account-management {
+  max-width: var(--wide-width);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+h3 {
+  color: var(--secondary-text-color);
+  font-size: 1.5rem;
+  font-weight: normal;
+  padding-left: 1.25rem;
+}
+
+.field {
+  border-top: 1px solid var(--account-divider-color);
+  color: var(--secondary-text-color);
+  display: flex;
+  padding: 0 1.25rem;
+
+  .action {
+    background: none;
+    border: 0;
+    color: var(--accent-color);
+    font-size: 1rem;
+    min-width: 3rem;
+    padding: 1.25rem 0;
+    text-decoration: none;
+    text-align: right;
+  }
+
+  .action:hover {
+    cursor: pointer;
+  }
+
+  label {
+    font-size: 1rem;
+    min-width: 150px;
+    padding: 1.25rem 0;
+  }
+
+  input {
+    background: none;
+    border: 0;
+    color: var(--secondary-text-color);
+    flex: 1;
+    padding: 1.25rem 1rem;
+  }
+}
+
+.password,
+.name {
+  border-bottom: 1px solid var(--account-divider-color);
+}
+
+.name {
+  margin-bottom: 2rem;
+
+  input {
+    margin: 0.5rem 1.25rem 0.5rem 0;
+    padding: 0.75rem 1rem;
+  }
+}
+
+.name.editing {
+  input {
+    outline: 1px solid var(--account-divider-color);
+  }
+}
+
+.secondary-action {
+  width: fit-content;
+}
+
+.logout {
+  margin-bottom: 1.25rem;
+}
+
+.delete-account {
+  max-width: 320px;
+  .secondary-action {
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+  }
+
+  .relogin-password {
+    margin-bottom: 1.25rem;
+  }
+}
+</style>
+
 <template>
-  <h2>Account Management</h2>
-  <h3>Email and Password</h3>
-  <div class="email">
-    <label for="email">Email</label>
-    <input name="email" type="text" v-model="email" readonly />
-    <RouterLink to="update-email">Edit</RouterLink>
-  </div>
-  <div class="password">
-    <label for="password">Password</label>
-    <input name="password" type="password" readonly />
-    <RouterLink to="reset-password">Reset</RouterLink>
-  </div>
-  <h3>Personal Information</h3>
-  <form
-    class="name"
-    @submit.prevent
-    :class="{ 'error-state': updateUserNameErrorMessage }"
-  >
+  <div class="account-management">
+    <h2>My Account</h2>
+    <h3>ID and Password</h3>
+    <div class="email field">
+      <label for="email">Email</label>
+      <input id="email" type="text" v-model="email" readonly />
+      <RouterLink to="update-email" class="action">Edit</RouterLink>
+    </div>
+    <div class="password field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="********" readonly />
+      <RouterLink to="reset-password" class="action">Reset</RouterLink>
+    </div>
+    <h3>Information</h3>
     <div class="error-message" v-if="updateUserNameErrorMessage">
       {{ updateUserNameErrorMessage }}
     </div>
-    <label for="first-name">Name</label>
-    <input
-      name="first-name"
-      type="text"
-      v-model="firstName"
-      :readonly="!editingName"
-    />
-    <input
-      name="last-name"
-      type="text"
-      v-model="lastName"
-      :readonly="!editingName"
-    />
-    <button @click="updateName" type="submit">
-      {{ editingName ? 'Save' : 'Edit' }}
-    </button>
-  </form>
-  <div class="logout">
-    <button @click="logout">Logout</button>
-  </div>
-  <form
-    class="delete-account"
-    @submit.prevent
-    :class="{ 'error-state': deleteErrorMessage }"
-  >
-    <div class="error-message" v-if="deleteErrorMessage">
-      {{ deleteErrorMessage }}
-    </div>
-    <div class="relogin-password" v-if="showRelogin">
-      <label for="password">Password</label>
+    <form
+      class="name field"
+      @submit.prevent="updateName"
+      :class="{
+        editing: editingName,
+        'error-state': updateUserNameErrorMessage,
+      }"
+    >
+      <label for="first-name">Name</label>
       <input
-        name="password"
-        type="password"
-        v-model="reloginPassword"
+        id="first-name"
+        type="text"
+        placeholder="First Name"
+        v-model="firstName"
+        :readonly="!editingName"
         required
       />
+      <input
+        id="last-name"
+        type="text"
+        placeholder="Last Name"
+        v-model="lastName"
+        :readonly="!editingName"
+        required
+      />
+      <button type="submit" class="action">
+        {{ editingName ? 'Save' : 'Edit' }}
+      </button>
+    </form>
+    <div class="logout">
+      <button @click="logout" class="secondary-action">Logout</button>
     </div>
-    <button @click="deleteAccount" type="submit">Delete account</button>
-  </form>
+    <form
+      class="delete-account"
+      @submit.prevent="deleteAccount"
+      :class="{ 'error-state': deleteErrorMessage }"
+    >
+      <div class="error-message" v-if="deleteErrorMessage">
+        {{ deleteErrorMessage }}
+      </div>
+      <div class="relogin-password" v-if="showRelogin">
+        <label for="password">Password</label>
+        <input
+          name="password"
+          type="password"
+          v-model="reloginPassword"
+          placeholder="Re-enter password to confirm deletion"
+          required
+        />
+      </div>
+      <button type="submit" class="secondary-action">Delete account</button>
+    </form>
+  </div>
 </template>

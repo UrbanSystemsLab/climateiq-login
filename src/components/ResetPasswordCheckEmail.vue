@@ -24,21 +24,34 @@ async function resendEmail() {
 }
 </script>
 
+<style scoped>
+.reset-password-check-email {
+  width: var(--narrow-width);
+}
+
+.error-message {
+  margin-top: 1.25rem;
+}
+</style>
+
 <template>
-  <h2>Check your email</h2>
-  <p>
-    If there is an account associated with {{ email }}, you will receive an
-    email with a link to reset your password.
-  </p>
-  <p>
-    Didn't receive the email? Check your spam filter for an email from
-    noreply@climateiq.org.
-  </p>
-  <button @click="resendEmail">Resend email</button>
-  <div class="email-resent" v-if="emailResent">Email resent!</div>
-  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-  <div class="account-actions">
-    <p><RouterLink to="/reset-password">Use another email</RouterLink></p>
-    <p><RouterLink to="/login">Log in</RouterLink></p>
+  <div class="reset-password-check-email">
+    <h2>Check your email</h2>
+    <p class="sent-email">
+      If there is an account associated with
+      <span class="email">{{ email }}</span
+      >, you will receive an email with a link to reset your password.
+    </p>
+    <p>
+      Didn't receive the email? Check your spam filter for an email from
+      noreply@climateiq.org.
+    </p>
+    <button @click="resendEmail" class="primary-action">Resend email</button>
+    <div class="email-resent" v-if="emailResent">Email resent!</div>
+    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+    <div class="account-actions">
+      <p><RouterLink to="/reset-password">Use another email</RouterLink></p>
+      <p><RouterLink to="/login">Log in</RouterLink></p>
+    </div>
   </div>
 </template>

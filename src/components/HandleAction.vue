@@ -109,18 +109,24 @@ onBeforeMount(async () => {
       handleVerifyEmail();
       break;
     default:
-    // Invalid mode
+      showError(Error(`${props.mode} is not a valid mode.`));
   }
 });
 </script>
 
+<style scoped>
+.handle-action {
+  width: var(--narrow-width);
+}
+</style>
+
 <template>
-  <div class="loading" v-if="showState == 'loading'">
+  <div class="handle-action loading" v-if="showState == 'loading'">
     <h2>Loading...</h2>
   </div>
 
-  <div class="error-message" v-if="showState == 'error'">
+  <div class="handle-action error" v-if="showState == 'error'">
     <h2>Error</h2>
-    <p>{{ errorMessage }}</p>
+    <p class="error-message">{{ errorMessage }}</p>
   </div>
 </template>

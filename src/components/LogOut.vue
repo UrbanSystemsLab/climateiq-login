@@ -22,4 +22,12 @@ async function logOut() {
 onBeforeMount(logOut);
 </script>
 
-<template><h2>Logging out...</h2></template>
+<style scoped>
+.log-out {
+  width: var(--narrow-width);
+}
+</style>
+
+<template>
+  <div class="log-out"><h2>Logging out...</h2></div>
+</template>

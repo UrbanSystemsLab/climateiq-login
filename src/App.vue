@@ -32,6 +32,8 @@ onBeforeUnmount(unsubscribeAuthListener);
 </script>
 
 <template>
-  <h1 class="logo">ClimateIQ</h1>
-  <RouterView />
+  <header>
+    <a href="https://dashboard.climateiq.org" id="logo">ClimateIQ</a>
+  </header>
+  <div class="main-content"><RouterView /></div>
 </template>

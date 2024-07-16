@@ -68,27 +68,51 @@ async function signUp() {
 }
 </script>
 
+<style scoped>
+.sign-up {
+  width: var(--narrow-width);
+}
+
+.email p {
+  color: var(--secondary-text-color);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.have-account-log-in {
+  border-top: 1px solid var(--divider-color);
+}
+</style>
+
 <template>
-  <h2>Sign Up</h2>
-  <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="email">
-      <label for="email">Email</label>
-      <input type="text" name="email" v-model="email" />
-      <p>We'll send you an email verification link.</p>
+  <div class="sign-up">
+    <h2>Sign Up</h2>
+    <form @submit.prevent="signUp" :class="{ 'error-state': errorMessage }">
+      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+      <div class="email">
+        <label for="email">Email</label>
+        <input type="email" id="email" v-model="email" required />
+        <p>We'll send you an email verification link.</p>
+      </div>
+
+      <div class="password">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          v-model="password"
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="primary-action">Continue</button>
+
+      <CommonDisclaimer />
+    </form>
+    <div class="have-account-login">
+      <p>Already have an account?</p>
+      <RouterLink to="/login" class="secondary-action">Log in</RouterLink>
     </div>
-
-    <div class="password">
-      <label for="password">Password</label>
-      <input type="password" name="password" v-model="password" />
-    </div>
-
-    <button @click="signUp" type="submit">Continue</button>
-
-    <CommonDisclaimer />
-  </form>
-  <div class="have-account-login">
-    <p>Already have an account?</p>
-    <RouterLink to="/login">Log in</RouterLink>
   </div>
 </template>

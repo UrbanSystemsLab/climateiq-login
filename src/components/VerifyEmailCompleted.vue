@@ -41,33 +41,77 @@ async function goToRedirectUri() {
   if (props.redirectUri) {
     window.location.href = props.redirectUri;
   } else {
-    router.push({ path: '/login' });
+    router.push({ path: '/' });
   }
 }
 </script>
 
+<style scoped>
+.verify-email-completed {
+  max-width: var(--wide-width);
+}
+
+form {
+  display: grid;
+  column-gap: 1rem;
+  grid-template-areas:
+    'error-msg error-msg'
+    '. .';
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  margin-bottom: 1.25rem;
+  row-gap: 1rem;
+
+  .error-message {
+    grid-area: error-msg;
+    margin-bottom: 0;
+  }
+
+  .primary-action {
+    min-width: 12rem;
+    height: fit-content;
+    width: fit-content;
+  }
+}
+
+.skip button {
+  background: none;
+  border: 0;
+  color: var(--accent-color);
+  font-size: 1rem;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.skip button:hover {
+  cursor: pointer;
+}
+</style>
+
 <template>
-  <h2>Complete Your Profile</h2>
-  <p>
-    Thanks for signing up! Please help improve our products by telling us a bit
-    about your use case. Your answers will help us understand our audience and
-    improve our offerings. We won't share your personal information.
-  </p>
-  <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="first-name">
-      <label for="firstName">First Name / Preferred Name</label>
-      <input type="text" name="first-name" v-model="firstName" />
-    </div>
+  <div class="verify-email-completed">
+    <h2>Complete Your Profile</h2>
+    <p>
+      Thanks for signing up! Please help improve our products by telling us a
+      bit about your use case. Your answers will help us understand our audience
+      and improve our offerings. We won't share your personal information.
+    </p>
+    <form @submit.prevent="submitInfo" :class="{ 'error-state': errorMessage }">
+      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
+      <div class="first-name">
+        <label for="first-name">First Name / Preferred Name</label>
+        <input type="text" id="first-name" v-model="firstName" required />
+      </div>
 
-    <div class="last-name">
-      <label for="lastName">Last Name</label>
-      <input type="text" name="last-name" v-model="lastName" />
-    </div>
+      <div class="last-name">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" v-model="lastName" required />
+      </div>
 
-    <button @click="submitInfo" type="submit">Continue</button>
-  </form>
-  <div class="skip">
-    <button @click="goToRedirectUri">Skip</button>
+      <button type="submit" class="primary-action">Continue</button>
+    </form>
+    <div class="skip">
+      <button @click="goToRedirectUri">Skip</button>
+    </div>
   </div>
 </template>
