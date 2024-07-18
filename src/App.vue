@@ -31,7 +31,36 @@ const unsubscribeAuthListener = onAuthStateChanged(
 onBeforeUnmount(unsubscribeAuthListener);
 </script>
 
+<style lang="scss">
+@import 'carbon-components/scss/globals/scss/theme-tokens.scss';
+
+header {
+  background-color: $ui-background !important;
+  border-bottom: 1px solid transparent !important;
+  padding: 0 24px;
+  position: static !important;
+}
+
+.cv-header-name {
+  background: url('./logo.svg') 1rem 0 no-repeat;
+  box-sizing: content-box;
+  font-size: 0 !important;
+  height: 18px !important;
+  width: 81px !important;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
+</style>
+
 <template>
-  <h1 class="logo">ClimateIQ</h1>
-  <RouterView />
+  <CvHeader>
+    <CvHeaderName href="https://dashboard.climateiq.org"
+      >ClimateIQ</CvHeaderName
+    >
+  </CvHeader>
+  <div class="main-content"><RouterView /></div>
 </template>

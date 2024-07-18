@@ -1,0 +1,39 @@
+h2 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.account-actions p a {
+  font-size: inherit;
+}
+
+.sent-email .email {
+  font-weight: bold;
+}
+
+.narrow-view {
+  width: 400px;
+
+  .cv-button {
+    min-width: 100%;
+  }
+
+  > *,
+  .cv-text-input,
+  .account-actions p {
+    margin-bottom: 1rem;
+  }
+
+  .reset-password-link a {
+    font-size: 0.75rem;
+  }
+
+  .cv-inline-notification {
+    margin-top: 0;
+  }
+}
+
+.wide-view {
+  max-width: 800px;
+}

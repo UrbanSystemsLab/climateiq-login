@@ -25,20 +25,35 @@ async function resendEmail() {
 </script>
 
 <template>
-  <h2>Check your email</h2>
-  <p>
-    If there is an account associated with {{ email }}, you will receive an
-    email with a link to reset your password.
-  </p>
-  <p>
-    Didn't receive the email? Check your spam filter for an email from
-    noreply@climateiq.org.
-  </p>
-  <button @click="resendEmail">Resend email</button>
-  <div class="email-resent" v-if="emailResent">Email resent!</div>
-  <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-  <div class="account-actions">
-    <p><RouterLink to="/reset-password">Use another email</RouterLink></p>
-    <p><RouterLink to="/login">Log in</RouterLink></p>
+  <div class="reset-password-check-email narrow-view">
+    <h2>Check your email</h2>
+    <p class="sent-email">
+      If there is an account associated with
+      <span class="email">{{ email }}</span
+      >, you will receive an email with a link to reset your password.
+    </p>
+    <p>
+      Didn't receive the email? Check your spam filter for an email from
+      noreply@climateiq.org.
+    </p>
+    <CvButton @click="resendEmail" kind="primary">Resend email</CvButton>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvInlineNotification
+      v-if="emailResent"
+      subTitle="Email resent!"
+      kind="success"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <div class="account-actions">
+      <p><CvLink to="/reset-password" inline>Use another email</CvLink></p>
+      <p><CvLink to="/login" inline>Log in</CvLink></p>
+    </div>
   </div>
 </template>

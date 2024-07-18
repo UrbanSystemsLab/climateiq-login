@@ -22,4 +22,9 @@ async function logOut() {
 onBeforeMount(logOut);
 </script>
 
-<template><h2>Logging out...</h2></template>
+<template>
+  <div class="log-out narrow-view">
+    <h2>Logging out...</h2>
+    <CvLoading active />
+  </div>
+</template>

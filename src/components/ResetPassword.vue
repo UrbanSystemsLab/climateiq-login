@@ -41,20 +41,23 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <h2>Reset your password</h2>
-  <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="email">
-      <label for="email">Email</label>
-      <input type="text" name="email" v-model="email" />
+  <div class="reset-password narrow-view">
+    <h2>Reset your password</h2>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvForm @submit.prevent="resetPassword">
+      <CvTextInput v-model="email" :data-invalid="errorMessage" label="Email" />
+      <CvButton kind="primary">Continue</CvButton>
+    </CvForm>
+    <div class="account-actions" v-if="!loggedIn">
+      <p><CvLink to="/sign-up" inline>Create an account</CvLink></p>
+      <p><CvLink to="/login" inline>Log in</CvLink></p>
     </div>
-
-    <button @click="resetPassword" type="submit">Continue</button>
-  </form>
-  <div class="account-actions" v-if="!loggedIn">
-    <p><RouterLink to="/sign-up">Create an account</RouterLink></p>
-    <p><RouterLink to="/login">Log in</RouterLink></p>
+    <CommonHelp />
   </div>
-
-  <CommonHelp />
 </template>

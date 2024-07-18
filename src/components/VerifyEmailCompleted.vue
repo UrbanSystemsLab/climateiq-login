@@ -41,33 +41,63 @@ async function goToRedirectUri() {
   if (props.redirectUri) {
     window.location.href = props.redirectUri;
   } else {
-    router.push({ path: '/login' });
+    router.push({ path: '/' });
   }
 }
 </script>
 
+<style scoped>
+form,
+p,
+.cv-text-input {
+  margin-bottom: 1rem;
+}
+
+form .fields {
+  display: grid;
+  column-gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  row-gap: 0.5rem;
+}
+</style>
+
 <template>
-  <h2>Complete Your Profile</h2>
-  <p>
-    Thanks for signing up! Please help improve our products by telling us a bit
-    about your use case. Your answers will help us understand our audience and
-    improve our offerings. We won't share your personal information.
-  </p>
-  <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="first-name">
-      <label for="firstName">First Name / Preferred Name</label>
-      <input type="text" name="first-name" v-model="firstName" />
+  <div class="verify-email-completed wide-view">
+    <h2>Complete Your Profile</h2>
+    <p>
+      Thanks for signing up! Please help improve our products by telling us a
+      bit about your use case. Your answers will help us understand our audience
+      and improve our offerings. We won't share your personal information.
+    </p>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvForm @submit.prevent="submitInfo">
+      <div class="fields">
+        <CvTextInput
+          v-model="firstName"
+          :data-invalid="errorMessage"
+          label="First / Preferred Name"
+          required
+        />
+        <CvTextInput
+          v-model="lastName"
+          :data-invalid="errorMessage"
+          label="Last Name"
+          required
+        />
+      </div>
+      <CvButton kind="primary">Continue</CvButton>
+    </CvForm>
+    <div class="skip">
+      <CvButton @click="goToRedirectUri" kind="ghost" size="small"
+        >Skip</CvButton
+      >
     </div>
-
-    <div class="last-name">
-      <label for="lastName">Last Name</label>
-      <input type="text" name="last-name" v-model="lastName" />
-    </div>
-
-    <button @click="submitInfo" type="submit">Continue</button>
-  </form>
-  <div class="skip">
-    <button @click="goToRedirectUri">Skip</button>
   </div>
 </template>

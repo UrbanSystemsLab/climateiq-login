@@ -59,3 +59,16 @@ firebase login --reauth
 ```
 
 For posterity, please also check in any changes to `password-config.json`.
+
+## Issues with npm install
+
+You might run into issues when running `npm install` because of the `@carbon/vue`
+dependency (see [this
+issue](https://github.com/carbon-design-system/carbon-components-vue/issues/1576)).
+
+As a workaround, install like this instead:
+
+```bash
+npm pack @carbon/vue
+npm install <path to downloaded package>
+```

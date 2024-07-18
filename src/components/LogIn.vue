@@ -78,35 +78,50 @@ onBeforeUnmount(unsubscribeAuthListener);
 </script>
 
 <template>
-  <div class="logged-out" v-show="!loggedIn">
+  <div class="login logged-out narrow-view" v-show="!loggedIn">
     <h2>Login</h2>
-    <form @submit.prevent :class="{ 'error-state': errorMessage }">
-      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-      <div class="email">
-        <label for="email">Email</label>
-        <input type="email" v-model="email" />
-      </div>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvForm @submit.prevent="signIn">
+      <CvTextInput
+        v-model="email"
+        :data-invalid="errorMessage"
+        label="Email"
+        autocomplete="username"
+        required
+      />
+      <CvTextInput
+        v-model="password"
+        :data-invalid="errorMessage"
+        label="Password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+      <CvButton kind="primary">Continue</CvButton>
+    </CvForm>
 
-      <div class="password">
-        <label for="password">Password</label>
-        <input type="password" v-model="password" />
-      </div>
+    <div class="reset-password-link">
+      <CvLink to="reset-password" inline>Reset password</CvLink>
+    </div>
 
-      <div class="reset-password">
-        <RouterLink to="reset-password">Reset Password</RouterLink>
-      </div>
+    <CommonDisclaimer />
 
-      <button @click="signIn" type="submit">Continue</button>
-
-      <CommonDisclaimer />
-    </form>
-    <div class="no-account-sign-up">
+    <div class="account-actions">
       <p>Don't have an account?</p>
-      <RouterLink to="/sign-up">Create account</RouterLink>
+      <RouterLink to="sign-up"
+        ><CvButton kind="tertiary">Create account</CvButton></RouterLink
+      >
     </div>
   </div>
-  <div class="logged-in" v-show="loggedIn">
+  <div class="login logged-in narrow-view" v-show="loggedIn">
     <h2>Logging in...</h2>
+    <CvLoading active />
   </div>
   <!-- Because this action results in a 302 redirect, must run request in the foreground
    by submitting through a form. -->

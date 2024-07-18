@@ -43,24 +43,39 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <h2>Update email</h2>
-  <form @submit.prevent :class="{ 'error-message': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="current-email">
-      <label for="current-email">Current email</label>
-      <input type="text" name="current-email" :value="currentEmail" readonly />
-    </div>
-
-    <div class="new-email">
-      <label for="new-email">New email</label>
-      <input type="text" name="new-email" v-model="newEmail" required />
-    </div>
-
-    <div class="password">
-      <label for="password">Password</label>
-      <input type="password" name="password" v-model="password" required />
-    </div>
-    <p>We'll send you an email verification link.</p>
-    <button @click="updateEmail" type="submit">Continue</button>
-  </form>
+  <div class="update-email narrow-view">
+    <h2>Update email</h2>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvForm @submit.prevent="updateEmail">
+      <CvTextInput
+        v-model="currentEmail"
+        :data-invalid="errorMessage"
+        label="Current Email"
+        invalid="errorMessage"
+        readonly
+      />
+      <CvTextInput
+        v-model="newEmail"
+        :data-invalid="errorMessage"
+        label="New email"
+        helperText="We'll send you an email verification link."
+        required
+      />
+      <CvTextInput
+        v-model="password"
+        :data-invalid="errorMessage"
+        label="Password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+      <CvButton kind="primary">Continue</CvButton>
+    </CvForm>
+  </div>
 </template>

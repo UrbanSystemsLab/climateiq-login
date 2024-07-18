@@ -109,18 +109,25 @@ onBeforeMount(async () => {
       handleVerifyEmail();
       break;
     default:
-    // Invalid mode
+      showError(Error(`${props.mode} is not a valid mode.`));
   }
 });
 </script>
 
 <template>
-  <div class="loading" v-if="showState == 'loading'">
+  <div class="handle-action loading narrow-view" v-if="showState == 'loading'">
     <h2>Loading...</h2>
+    <CvLoading active />
   </div>
 
-  <div class="error-message" v-if="showState == 'error'">
+  <div class="handle-action error narrow-view" v-if="showState == 'error'">
     <h2>Error</h2>
-    <p>{{ errorMessage }}</p>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
   </div>
 </template>

@@ -13,6 +13,7 @@
         "updatePasswordConfig": "npm run downloadConfig && node update-password-config.cjs"
     },
     "dependencies": {
+        "@carbon/vue": "^3.0.18",
         "axios": "^1.7.2",
         "cookie": "^0.6.0",
         "firebase": "^10.11.1",
@@ -32,6 +33,8 @@
         "eslint-plugin-vue": "^9.26.0",
         "firebase-admin": "^12.2.0",
         "prettier": "^3.2.5",
+        "sass": "^1.77.8",
+        "sass-loader": "^14.2.1",
         "typescript": "^5.4.5",
         "typescript-eslint": "^7.10.0",
         "vite": "^5.2.0",
