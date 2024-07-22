@@ -69,26 +69,38 @@ async function signUp() {
 </script>
 
 <template>
-  <h2>Sign Up</h2>
-  <form @submit.prevent :class="{ 'error-state': errorMessage }">
-    <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
-    <div class="email">
-      <label for="email">Email</label>
-      <input type="text" name="email" v-model="email" />
-      <p>We'll send you an email verification link.</p>
-    </div>
-
-    <div class="password">
-      <label for="password">Password</label>
-      <input type="password" name="password" v-model="password" />
-    </div>
-
-    <button @click="signUp" type="submit">Continue</button>
-
+  <div class="sign-up narrow-view">
+    <h2>Sign Up</h2>
+    <CvInlineNotification
+      v-if="errorMessage"
+      :subTitle="errorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvForm @submit.prevent="signUp">
+      <CvTextInput
+        label="Email"
+        v-model="email"
+        :data-invalid="errorMessage"
+        helperText="We'll send you an email verification link."
+      />
+      <CvTextInput
+        label="Password"
+        v-model="password"
+        :data-invalid="errorMessage"
+        type="password"
+        autocomplete="new-password"
+        required
+      />
+      <CvButton kind="primary">Continue</CvButton>
+    </CvForm>
     <CommonDisclaimer />
-  </form>
-  <div class="have-account-login">
-    <p>Already have an account?</p>
-    <RouterLink to="/login">Log in</RouterLink>
+    <div class="account-actions">
+      <p>Already have an account?</p>
+      <RouterLink to="/login"
+        ><CvButton kind="tertiary">Log in</CvButton></RouterLink
+      >
+    </div>
   </div>
 </template>

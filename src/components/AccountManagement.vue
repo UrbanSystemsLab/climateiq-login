@@ -107,65 +107,151 @@ onBeforeUnmount(() => {
 });
 </script>
 
+<style lang="scss">
+@import 'carbon-components/scss/globals/scss/theme-tokens.scss';
+.account-management {
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 5rem;
+  }
+
+  h3,
+  .delete-account,
+  .logout {
+    margin-bottom: 1rem;
+  }
+
+  .bx--structured-list {
+    margin-bottom: 4rem;
+  }
+
+  .delete-account {
+    max-width: var(--narrow-width);
+  }
+
+  .cv-structured-list-data {
+    vertical-align: middle;
+  }
+
+  .cv-structured-list-data:nth-of-type(3n - 2) {
+    width: 10rem;
+  }
+
+  .cv-structured-list-data:nth-of-type(3n) {
+    text-align: right;
+  }
+
+  // In order for these rules to apply, this css can't be scoped.
+  .name-data {
+    display: flex;
+
+    .cv-text-input {
+      // This removes extra space around the field.
+      flex-direction: row;
+    }
+
+    .cv-text-input:first-of-type {
+      margin-right: 1em;
+    }
+
+    input:disabled {
+      background: none;
+      -webkit-text-fill-color: $text-02;
+    }
+  }
+
+  // Override main style
+  .delete-account .cv-button {
+    min-width: 0;
+  }
+}
+</style>
+
 <template>
-  <h2>Account Management</h2>
-  <h3>Email and Password</h3>
-  <div class="email">
-    <label for="email">Email</label>
-    <input name="email" type="text" v-model="email" readonly />
-    <RouterLink to="update-email">Edit</RouterLink>
-  </div>
-  <div class="password">
-    <label for="password">Password</label>
-    <input name="password" type="password" readonly />
-    <RouterLink to="reset-password">Reset</RouterLink>
-  </div>
-  <h3>Personal Information</h3>
-  <form
-    class="name"
-    @submit.prevent
-    :class="{ 'error-state': updateUserNameErrorMessage }"
-  >
-    <div class="error-message" v-if="updateUserNameErrorMessage">
-      {{ updateUserNameErrorMessage }}
+  <div class="account-management wide-view">
+    <h2>My Account</h2>
+    <h3>ID and Password</h3>
+    <CvStructuredList condensed>
+      <template v-slot:items>
+        <CvStructuredListItem>
+          <CvStructuredListData>Email</CvStructuredListData>
+          <CvStructuredListData>{{ email }}</CvStructuredListData>
+          <CvStructuredListData
+            ><RouterLink to="update-email"
+              ><CvButton kind="ghost" size="small">Edit</CvButton></RouterLink
+            ></CvStructuredListData
+          >
+        </CvStructuredListItem>
+        <CvStructuredListItem value="test1">
+          <CvStructuredListData>Password</CvStructuredListData>
+          <CvStructuredListData>********</CvStructuredListData>
+          <CvStructuredListData
+            ><RouterLink to="reset-password"
+              ><CvButton kind="ghost" size="small">Reset</CvButton></RouterLink
+            ></CvStructuredListData
+          >
+        </CvStructuredListItem>
+      </template>
+    </CvStructuredList>
+
+    <h3>Information</h3>
+    <CvInlineNotification
+      v-if="updateUserNameErrorMessage"
+      :subTitle="updateUserNameErrorMessage"
+      kind="error"
+      lowContrast
+      hideCloseButton
+    ></CvInlineNotification>
+    <CvStructuredList condensed>
+      <template v-slot:items>
+        <CvStructuredListItem>
+          <CvStructuredListData>Name</CvStructuredListData>
+          <CvStructuredListData class="name-data">
+            <CvTextInput
+              v-model="firstName"
+              :disabled="!editingName"
+              :data-invalid="updateUserNameErrorMessage"
+              placeholder="First / Preferred Name"
+            />
+            <CvTextInput
+              v-model="lastName"
+              :disabled="!editingName"
+              :data-invalid="updateUserNameErrorMessage"
+              placeholder="Last Name"
+            />
+          </CvStructuredListData>
+          <CvStructuredListData
+            ><CvButton @click="updateName" kind="ghost" size="small">{{
+              editingName ? 'Save' : 'Edit'
+            }}</CvButton></CvStructuredListData
+          >
+        </CvStructuredListItem>
+      </template>
+    </CvStructuredList>
+    <div class="logout">
+      <CvButton @click="logout" kind="tertiary">Logout</CvButton>
     </div>
-    <label for="first-name">Name</label>
-    <input
-      name="first-name"
-      type="text"
-      v-model="firstName"
-      :readonly="!editingName"
-    />
-    <input
-      name="last-name"
-      type="text"
-      v-model="lastName"
-      :readonly="!editingName"
-    />
-    <button @click="updateName" type="submit">
-      {{ editingName ? 'Save' : 'Edit' }}
-    </button>
-  </form>
-  <div class="logout">
-    <button @click="logout">Logout</button>
+    <div class="delete-account narrow-view">
+      <CvInlineNotification
+        v-if="deleteErrorMessage"
+        :subTitle="deleteErrorMessage"
+        kind="error"
+        lowContrast
+        hideCloseButton
+      ></CvInlineNotification>
+      <CvForm @submit.prevent="deleteAccount">
+        <div class="relogin-password" v-if="showRelogin">
+          <CvTextInput
+            v-model="reloginPassword"
+            :data-invalid="deleteErrorMessage"
+            type="password"
+            label="Password"
+            placeholder="Re-enter password to confirm deletion"
+            required
+          />
+        </div>
+        <CvButton kind="danger--tertiary">Delete account</CvButton>
+      </CvForm>
+    </div>
   </div>
-  <form
-    class="delete-account"
-    @submit.prevent
-    :class="{ 'error-state': deleteErrorMessage }"
-  >
-    <div class="error-message" v-if="deleteErrorMessage">
-      {{ deleteErrorMessage }}
-    </div>
-    <div class="relogin-password" v-if="showRelogin">
-      <label for="password">Password</label>
-      <input
-        name="password"
-        type="password"
-        v-model="reloginPassword"
-        required
-      />
-    </div>
-    <button @click="deleteAccount" type="submit">Delete account</button>
-  </form>
 </template>
