@@ -8,14 +8,20 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-import { doc, deleteDoc, getDoc, getFirestore } from 'firebase/firestore';
+import {
+  doc,
+  deleteDoc,
+  getDoc,
+  initializeFirestore,
+} from 'firebase/firestore';
 import { onBeforeUnmount, ref } from 'vue';
 
+import { FIRESTORE_DB } from '../common';
 import { router } from '../router';
 import { deleteUserOnClimasens, updateUserName } from '../user-utils';
 
 const auth = getAuth();
-const db = getFirestore(getApp());
+const db = initializeFirestore(getApp(), {}, FIRESTORE_DB);
 
 // Fields
 const email = ref();

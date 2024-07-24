@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { ref } from 'vue';
 
-import { cookiesSet, REDIRECT_URI_PROP } from '../common';
+import { cookiesSet, FIRESTORE_DB, REDIRECT_URI_PROP } from '../common';
 import { router } from '../router';
 import { updateUserName } from '../user-utils';
 
 const auth = getAuth();
-const db = getFirestore(getApp());
+const db = initializeFirestore(getApp(), {}, FIRESTORE_DB);
 const props = defineProps(REDIRECT_URI_PROP);
 
 // Fields

@@ -13,6 +13,8 @@ const AUTH_CODE =
 const SAML_API_ENDPOINT_URI =
   'https://api.climateiq.org/apigee-saml-idp/authcomplete';
 
+export const FIRESTORE_DB = 'users';
+
 export const REDIRECT_URI_PROP = {
   redirectUri: {
     type: String,
