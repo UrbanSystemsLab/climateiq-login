@@ -11,9 +11,9 @@ npm run dev -- --host
 ## Deploy to Firebase Hosting<a name="deploy"></a>
 
 Generally, you need Editor or Owner permissions to ClimateIQ GCP to deploy to Firebase
-Hosting. See [here](https://firebase.corp.google.com/project/climateiq/settings/iam) for
-a list of users with permissions. GCP Owners can also set up
-[more granular roles](https://firebase.google.com/docs/projects/iam/overview#roles).
+Hosting. See [here](https://console.firebase.google.com/project/climateiq/settings/iam)
+for a list of users with permissions. GCP Owners can also set up
+[more granular roles](https://firebase.google.com/docs/projects/iam/permissions#hosting).
 
 Install
 [firebase-cli](https://firebaseopensource.com/projects/firebase/firebase-tools/#installation),
