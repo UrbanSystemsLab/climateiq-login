@@ -34,6 +34,26 @@ onBeforeUnmount(unsubscribeAuthListener);
 <style lang="scss">
 @import 'carbon-components/scss/globals/scss/theme-tokens.scss';
 
+h2, h3{
+  margin-bottom: 1em;
+}
+
+p{
+  margin-bottom: 1em;
+}
+
+ul {
+  list-style-type: circle;
+  padding: 1em;
+}
+
+ol {
+  list-style-type: decimal;
+  padding: 1em;
+}
+
+
+
 header {
   background-color: $ui-background !important;
   border-bottom: 1px solid transparent !important;

@@ -883,3 +883,11 @@
     <p>info@climateiq.org</p>
   </div>
 </template>
+
+<style lang="scss">
+
+//p{
+//  margin: 1em;
+//}
+
+</style>
