@@ -885,9 +885,6 @@
 </template>
 
 <style lang="scss">
-
-//p{
-//  margin: 1em;
-//}
+@import '../tos-styles.scss'
 
 </style>
