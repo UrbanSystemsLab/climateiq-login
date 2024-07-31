@@ -342,6 +342,5 @@
 </template>
 
 <style lang="scss">
-@import '../tos-styles.scss'
-
+@import '../tos-styles.scss';
 </style>
