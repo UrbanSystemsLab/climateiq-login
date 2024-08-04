@@ -340,3 +340,7 @@
     </p>
   </div>
 </template>
+
+<style lang="scss">
+@import '../tos-styles.scss';
+</style>

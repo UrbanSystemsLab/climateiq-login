@@ -883,3 +883,7 @@
     <p>info@climateiq.org</p>
   </div>
 </template>
+
+<style lang="scss">
+@import '../tos-styles.scss';
+</style>
